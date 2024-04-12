@@ -1,0 +1,15 @@
+{
+  "name": "web_design",
+  "version": "1.0.0",
+  "description": "Design a prototype web application for a chosen scope",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "lhuy0594-tracker"
+  },
+  "author": "Lily Huynh",
+  "license": "ISC"
+}
