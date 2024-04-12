@@ -4,6 +4,7 @@
   "description": "Design a prototype web application for a chosen scope",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,5 +12,8 @@
     "url": "lhuy0594-tracker"
   },
   "author": "Lily Huynh",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
