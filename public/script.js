@@ -1,151 +1,63 @@
-// // Create an object called 'task'
-// // Populate the properties based on the provided data model
+const form = document.getElementById("msgForm")
+const msgList = document.getElementById("msgList")
 
-// // let task = {
-// //   name: "Initial Sketches",
-// //   type: "Concept Ideation",
-// //   id: Date.now(),
-// //   date: new Date().toISOString(),
-// //   rate: 35,
-// //   time: 5,
-// //   client: "Google"
-// // }
+class Messages {
+    constructor() {
+        this.listOfMsgs = []
+    }
 
-// // console.log(task);
+    addMsg(name, feeling, affirmation, goal, question) {
+        var newMsg = new Message(name, feeling, affirmation, goal, question)
+        this.listOfMsgs.push(newMsg)
+        this.displayMsg(newMsg)
+    }
 
-// // Create a function called 'addTask'
-// // Give the function input parameters for: name, type, rate, time, client
-// // Paste your object definition from above in the function
-// // Replace the property values with the input paramaters
-// // Add the object to the taskList array
+    displayMsg(msg) {
+        let item = document.createElement("li")
+        item.id = 'msg-item'
+        item.innerHTML = `<p><strong>${msg.name}</strong><br></br>${msg.feeling}</p>`
+        msgList.appendChild(item)
+        form.reset()
 
-// // let taskList = [];
+        let delButton = document.createElement("button")
+        let delButtonText = document.createTextNode("Delete")
+        delButton.appendChild(delButtonText)
+        item.appendChild(delButton)
 
-// // function addTask(name, type, rate, time, client){
-// //   task.name = name;
-// //   task.type = type;
-// //   task.rate = rate;
-// //   task.time = time;
-// //   task.client = client;
-// //   taskListEx.push(task);
-// // }
+        delButton.addEventListener("click", function (event) {
+            item.remove()
+            listOfMsgs = listOfMsgs.filter(msg => msg.id !== item.getAttribute('msg-item'))
+            console.log(listOfMsgs)
+        })
+    }
+}
 
-// // Call the function with test values for the input paramaters
-// // addTask("Home page design", "Wireframe Design", 50, 3, "Goldman Sachs");
-// // addTask("Backend dev", "Application Coding", 80, 10, "Meta");
-// // addTask("Database testing", "Testing/Debugging", 60, 20, "Some tech company idk");
+class Message {
+    constructor(name, feeling, affirmation, goal, question) {
+        this.name = name
+        this.feeling = feeling
+        this.affirmation = affirmation
+        this.goal = goal
+        this.question = question
+    }
+}
 
-// // Log the array to the console.
-// // for (i = 0; i < taskList.length; i++){
-// //   console.log(taskList[i]);
-// // }
+var listMsgs = new Messages
+// var todayDate = new Date();
+// var todayDateStr = todayDate.toLocaleString();
+// document.getElementById("today-date").innerHTML = todayDateStr
 
-// // CLASS EXAMPLE
+form.addEventListener("submit", function (event) {
+    console.log("submit detected")
+    event.preventDefault();
+    var msgName = form.elements.partnerName.value
+    var msgFeel = form.elements.partnerFeeling.value
+    var msgAffirm = form.elements.partnerAffirmation.value
+    var msgGoal = form.elements.partnerGoal.value
+    var msgQuestion = form.querySelector('input[name="partnerQuestion"]:checked').value
+    console.log(msgName, msgFeel, msgAffirm, msgGoal, msgQuestion)
+    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgQuestion)
+    console.log(listMsgs.listOfMsgs)
+})
 
-// // class TasksList extends Task{
-// //   constructor(taskList){
-// //     this.taskList = taskList;
-// //   }
-
-// //   addTask(){
-// //     taskList.push();
-// //   }
-
-// //   showTasks(){
-// //     return this.taskList;
-// //   }
-// // }
-
-
-// // class Task{
-// //   constructor(name, type, id = Date.now(), date = new Date.toISOString(), rate, time, client){
-// //     this.name = name;
-// //     this.type = type;
-// //     this.id = id;
-// //     this.date = date;
-// //     this.rate = rate;
-// //     this.time = time;
-// //     this.client = client;
-// //   }
-
-// //   newTask(name, type, rate, time, client){
-// //     this.name = name;
-// //     this.type = type;
-// //     this.rate = rate;
-// //     this.time = time;
-// //     this.client = client;
-// //   }
-// // }
-
-// // let newTaskList = [];
-// // var myList = new TasksList(newTaskList);
-// // var task1 = new Task("Task 1", "Type 1", 10, 5, "Client 1");
-// // var task2 = new Task("Task 2", "Type 1", 20, 10, "Client 2");
-
-// // myList.addTask(task1);
-// // myList.addTask(task2);
-
-// // console.log(myList.showTasks());
-
-// const form = document.getElementById("taskForm")
-// const taskList = document.getElementById("taskList")
-
-// class Tasks {
-//     constructor() {
-//         this.listOfTasks = []
-//     }
-
-//     addTask(name, type, rate, time, client) {
-//         var newTask = new Task(name, type, rate, time, client)
-//         this.listOfTasks.push(newTask)
-//         this.displayTask(newTask)
-//     }
-
-//     displayTask(task) {
-//         let item = document.createElement("li")
-//         item.id = 'data-id'
-//         item.innerHTML = `<p><strong>${task.name}</strong><br></br>${task.type}</p>`
-//         taskList.appendChild(item)
-//         form.reset()
-
-//         let delButton = document.createElement("button")
-//         let delButtonText = document.createTextNode("Delete")
-//         delButton.appendChild(delButtonText)
-//         item.appendChild(delButton)
-
-//         delButton.addEventListener("click", function (event) {
-//             item.remove()
-//             listOfTasks = listOfTasks.filter(task => task.id !== item.getAttribute('data-id'))
-//             console.log(listOfTasks)
-//         })
-//     }
-// }
-
-// class Task {
-//     constructor(name, type, rate, time, client) {
-//         this.name = name
-//         this.type = type
-//         this.rate = rate
-//         this.time = time
-//         this.client = client
-//     }
-// }
-
-// var listTasks = new Tasks
-
-// form.addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     var taskName = form.elements.taskName.value
-//     var taskType = form.elements.taskType.value
-//     var taskRate = form.elements.taskRate.value
-//     var taskTime = form.elements.taskTime.value
-//     var taskClient = form.elements.taskClient.value
-//     listTasks.addTask(taskName, taskType, taskRate, taskTime, taskClient)
-//     console.log(listTasks.listOfTasks)
-// })
-
-var todayDate = new Date();
-var todayDateStr = todayDate.toLocaleString();
-
-document.getElementById("today-date").innerHTML = todayDateStr
 console.log("executed")

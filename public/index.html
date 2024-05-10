@@ -20,32 +20,37 @@
     <form id="msgForm">
         <div class="container">
             <div class="form-col-left">
-                <p>From <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" /></p>
-                <select name="partnerFeeling" id="partnerFeeling" required="true">
+                <p>From <input type="text" name="partnerName" id="partnerName" value="partnerName" required="true" placeholder="Name" /></p>
+                <select name="partnerFeeling" id="partnerFeeling" required="true" value="partnerFeeling">
                     <option value="default" disabled selected>Feeling</option>
                     <option value="happy">Happy</option>
                     <option value="sad">Sad</option>
                 </select>
                 <div class="form-row">
-                    <textarea name="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation"></textarea>
+                    <textarea name="partnerAffirmation" value="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation"></textarea>
                 </div>
                 <div class="form-row">
-                    <textarea name="partnerGoal" id="partnerGoal" placeholder="Goal of the Day"></textarea>
+                    <textarea name="partnerGoal" value="partnerGoal" id="partnerGoal" placeholder="Goal of the Day"></textarea>
                 </div>
             </div>
             <div class="form-col-right">
                 <p id="today-date"></p>
                 <h5>Would You Rather?</h5>
                 <p>ooonga boonga</p>
-                    <form id="questionForm">
-                        <input type="radio" name="questions" value="choiceA" id="choiceA">
-                        <label for="choiceA">choice a</label>
-                        <input type="radio" name="questions" value="choiceB" id="choiceB">
-                        <label for="choiceB">choice b</label>
-                    </form>
+                    <input type="radio" name="partnerQuestion" value="choiceA" id="choiceA">
+                    <label for="choiceA">choice a</label>
+                    <input type="radio" name="partnerQuestion" value="choiceB" id="choiceB">
+                    <label for="choiceB">choice b</label>
             </div>
         </div>
+        <input type="submit" name="msg-btn"/>
     </form>
+    <hr>
+    <div id="msg-container">
+        <ul id="msgList">
+
+        </ul>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
