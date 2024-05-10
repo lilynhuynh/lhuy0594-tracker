@@ -5,47 +5,52 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Task Demo</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="scss/main.scss" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <header>
-        <h1>Task Tracker</h1>
+        <h1>
+            <img src="images/heart.png" class="title_icon">
+            Our Love Diary
+            <img src="images/heart.png" class="title_icon">
+        </h1>
     </header>
-
-    <form id="taskForm">
-        <div class="form-row">
-            <label for="taskName">Name</label>
-            <input type="text" name="taskName" id="taskName" required="true" />
+    <form id="msgForm">
+        <div class="container">
+            <div class="form-col-left">
+                <p>From <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" /></p>
+                <select name="partnerFeeling" id="partnerFeeling" required="true" value="partnerFeeling">
+                    <option value="default" disabled selected>Feeling</option>
+                    <option value="happy">Happy</option>
+                    <option value="sad">Sad</option>
+                </select>
+                <div class="form-row">
+                    <textarea name="partnerAffirmation" value="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation" required="true"></textarea>
+                </div>
+                <div class="form-row">
+                    <textarea name="partnerGoal" value="partnerGoal" id="partnerGoal" placeholder="Goal of the Day" required="true"></textarea>
+                </div>
+            </div>
+            <div class="form-col-right">
+                <p id="today-date"></p>
+                <h5>Would You Rather?</h5>
+                <p id="questionPrompt" name="questionPrompt" value="questionPrompt">ooonga boonga</p>
+                    <input type="radio" name="partnerQuestion" value="choiceA" id="choiceA" required="true">
+                    <label id="choiceATxt" for="choiceA">choice a</label>
+                    <input type="radio" name="partnerQuestion" value="choiceB" id="choiceB" required="true">
+                    <label id="choiceBTxt" for="choiceB">choice b</label>
+            </div>
         </div>
-        <div class="form-row">
-            <label for="taskType">Type</label>
-            <input type="text" name="taskType" id="taskType" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskRate">Rate</label>
-            <input type="text" name="taskRate" id="taskRate" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskTime">Time</label>
-            <input type="text" name="taskTime" id="taskTime" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskClient">Client</label>
-            <input type="text" name="taskClient" id="taskClient" required="true" />
-        </div>
-        <div class="form-row">
-            <input type="submit" />
-        </div>
+        <input type="submit" name="msg-btn"/>
     </form>
+    <hr>
+    <div id="msg-container">
+        <ul id="msgList">
 
-    <h2>Tasks</h2>
-    <ul id="taskList">
-
-    </ul>
-
-
+        </ul>
+    </div>
     <script src="script.js"></script>
 </body>
-
 </html>

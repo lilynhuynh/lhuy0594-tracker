@@ -1,111 +1,57 @@
-// Create an object called 'task'
-// Populate the properties based on the provided data model
+const form = document.getElementById("msgForm")
+const msgList = document.getElementById("msgList")
 
-// let task = {
-//   name: "Initial Sketches",
-//   type: "Concept Ideation",
-//   id: Date.now(),
-//   date: new Date().toISOString(),
-//   rate: 35,
-//   time: 5,
-//   client: "Google"
-// }
+var todayDate = new Date();
+var todayDateStr = todayDate.toLocaleString();
+document.getElementById("today-date").innerHTML = todayDateStr
 
-// console.log(task);
-
-// Create a function called 'addTask'
-// Give the function input parameters for: name, type, rate, time, client
-// Paste your object definition from above in the function
-// Replace the property values with the input paramaters
-// Add the object to the taskList array
-
-// let taskList = [];
-
-// function addTask(name, type, rate, time, client){
-//   task.name = name;
-//   task.type = type;
-//   task.rate = rate;
-//   task.time = time;
-//   task.client = client;
-//   taskListEx.push(task);
-// }
-
-// Call the function with test values for the input paramaters
-// addTask("Home page design", "Wireframe Design", 50, 3, "Goldman Sachs");
-// addTask("Backend dev", "Application Coding", 80, 10, "Meta");
-// addTask("Database testing", "Testing/Debugging", 60, 20, "Some tech company idk");
-
-// Log the array to the console.
-// for (i = 0; i < taskList.length; i++){
-//   console.log(taskList[i]);
-// }
-
-// CLASS EXAMPLE
-
-// class TasksList extends Task{
-//   constructor(taskList){
-//     this.taskList = taskList;
-//   }
-
-//   addTask(){
-//     taskList.push();
-//   }
-
-//   showTasks(){
-//     return this.taskList;
-//   }
-// }
-
-
-// class Task{
-//   constructor(name, type, id = Date.now(), date = new Date.toISOString(), rate, time, client){
-//     this.name = name;
-//     this.type = type;
-//     this.id = id;
-//     this.date = date;
-//     this.rate = rate;
-//     this.time = time;
-//     this.client = client;
-//   }
-
-//   newTask(name, type, rate, time, client){
-//     this.name = name;
-//     this.type = type;
-//     this.rate = rate;
-//     this.time = time;
-//     this.client = client;
-//   }
-// }
-
-// let newTaskList = [];
-// var myList = new TasksList(newTaskList);
-// var task1 = new Task("Task 1", "Type 1", 10, 5, "Client 1");
-// var task2 = new Task("Task 2", "Type 1", 20, 10, "Client 2");
-
-// myList.addTask(task1);
-// myList.addTask(task2);
-
-// console.log(myList.showTasks());
-
-const form = document.getElementById("taskForm")
-const taskList = document.getElementById("taskList")
-
-class Tasks {
+class Messages {
     constructor() {
-        this.listOfTasks = []
+        this.listOfMsgs = []
     }
 
-    addTask(name, type, rate, time, client) {
-        var newTask = new Task(name, type, rate, time, client)
-        this.listOfTasks.push(newTask)
-        this.displayTask(newTask)
+    addMsg(name, feeling, affirmation, goal, answer, question, id) {
+        var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id)
+        this.listOfMsgs.push(newMsg)
+        this.displayMsg(newMsg)
     }
 
-    displayTask(task) {
+    displayMsg(msg) {
         let item = document.createElement("li")
-        item.id = 'data-id'
-        item.innerHTML = `<p><strong>${task.name}</strong><br></br>${task.type}</p>`
-        taskList.appendChild(item)
+        item.id = "msg-card"
+
+        var msgCard = document.createElement("div")
+        msgCard.id = msg.id
+        msgCard.class = "container"
+
+
+        msgCard.innerHTML =
+            `
+            <div class="form-col-left">
+                <div class="form-row">
+                    <p>From ${msg.name}</p>
+                </div>
+                <div class="form-row">
+                    <p>Today, I feel ${msg.feeling}</p>
+                </div>
+                <div class="form-row">
+                    <p>My daily affirmation is</p>
+                    <p>${msg.affirmation}</p>
+                </div>
+                <div class="form-row">
+                    <p>My goal today is</p>
+                    <p>${msg.goal}</p>
+                </div>
+            </div>
+            <div class="form-col-right">
+                <p>${msg.date}</p>
+                <h5>Would You Rather?</h5>
+                <p>${msg.question}</p>
+                    <p>${msg.answer}</p>
+            </div>
+            `
+        item.append(msgCard)
+        msgList.appendChild(item)
         form.reset()
 
         let delButton = document.createElement("button")
@@ -115,31 +61,86 @@ class Tasks {
 
         delButton.addEventListener("click", function (event) {
             item.remove()
-            listOfTasks = listOfTasks.filter(task => task.id !== item.getAttribute('data-id'))
-            console.log(listOfTasks)
+            listOfMsgs = listOfMsgs.filter(msg => msg.id !== item.getAttribute('msg-card'))
+            console.log(listOfMsgs)
         })
     }
 }
 
-class Task {
-    constructor(name, type, rate, time, client) {
+class Message {
+    constructor(name, feeling, affirmation, goal, answer, question, id) {
         this.name = name
-        this.type = type
-        this.rate = rate
-        this.time = time
-        this.client = client
+        this.feeling = feeling
+        this.affirmation = affirmation
+        this.goal = goal
+        this.answer = answer
+        this.question = question
+        this.id = id
     }
 }
 
-var listTasks = new Tasks
+var listMsgs = new Messages()
 
 form.addEventListener("submit", function (event) {
+    console.log("submit detected")
     event.preventDefault();
-    var taskName = form.elements.taskName.value
-    var taskType = form.elements.taskType.value
-    var taskRate = form.elements.taskRate.value
-    var taskTime = form.elements.taskTime.value
-    var taskClient = form.elements.taskClient.value
-    listTasks.addTask(taskName, taskType, taskRate, taskTime, taskClient)
-    console.log(listTasks.listOfTasks)
+    var msgName = form.elements.partnerName.value
+    var msgFeel = form.elements.partnerFeeling.value
+    var msgAffirm = form.elements.partnerAffirmation.value
+    var msgGoal = form.elements.partnerGoal.value
+    var msgAnswer = form.querySelector('input[name="partnerQuestion"]:checked').value
+    console.log(document.getElementById("questionPrompt").innerText)
+    var msgQuestion = document.getElementById("questionPrompt").innerText
+    var msgId = Math.floor(Math.random() * Date.now())
+    console.log(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId)
+    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId)
+    console.log(listMsgs.listOfMsgs)
 })
+
+// Would You Rather Questions provided by Paired Magazine
+var questionList =
+    {
+        question0:["Would you rather eat pizza or ice cream as the only food for the rest of your life?",
+            "Pizza",
+            "Ice Cream"
+        ],
+        question1:["Would you rather go on a date to a water park or a theme park?",
+            "Water Park",
+            "Theme Park"
+        ]
+    }
+
+console.log(questionList)
+
+function generateQuestion(){
+    var questionGenerator = String(Math.floor(Math.random(1)));
+    var questionStr = "question" + questionGenerator;
+
+    var chosenQuestion = questionList[questionStr]
+    if (chosenQuestion == "null"){
+        console.log("No more questions left!")
+    }
+    console.log(chosenQuestion)
+
+    var changePrompt = document.getElementById("questionPrompt");
+    changePrompt.innerText = chosenQuestion[0];
+    console.log(changePrompt.innerText)
+
+    var changeChoiceAVal = document.getElementById("choiceA");
+    changeChoiceAVal.value = chosenQuestion[1];
+    
+    var changeChoiceATxt = document.getElementById("choiceATxt");
+    changeChoiceATxt.innerHTML = chosenQuestion[1];
+
+    var changeChoiceBVal = document.getElementById("choiceB");
+    changeChoiceBVal.value = chosenQuestion[2];
+
+    var changeChoiceBTxt =document.getElementById("choiceBTxt");
+    changeChoiceBTxt.innerHTML = chosenQuestion[2];
+
+    delete questionList[questionStr];
+    console.log(questionList)
+}
+window.onload = generateQuestion();
+
+console.log("executed")
