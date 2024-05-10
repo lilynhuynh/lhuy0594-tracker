@@ -6,46 +6,46 @@
     <meta name="viewport" content="width=device-width">
     <title>Task Demo</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="scss/main.scss" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <header>
-        <h1>Task Tracker</h1>
+        <h1>
+            <img src="images/heart.png" class="title_icon">
+            Our Love Diary
+            <img src="images/heart.png" class="title_icon">
+        </h1>
     </header>
-
-    <form id="taskForm">
-        <div class="form-row">
-            <label for="taskName">Name</label>
-            <input type="text" name="taskName" id="taskName" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskType">Type</label>
-            <input type="text" name="taskType" id="taskType" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskRate">Rate</label>
-            <input type="text" name="taskRate" id="taskRate" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskTime">Time</label>
-            <input type="text" name="taskTime" id="taskTime" required="true" />
-        </div>
-        <div class="form-row">
-            <label for="taskClient">Client</label>
-            <input type="text" name="taskClient" id="taskClient" required="true" />
-        </div>
-        <div class="form-row">
-            <input type="submit" />
+    <form id="msgForm">
+        <div class="container">
+            <div class="form-col-left">
+                <p>From <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" /></p>
+                <select name="partnerFeeling" id="partnerFeeling" required="true">
+                    <option value="default" disabled selected>Feeling</option>
+                    <option value="happy">Happy</option>
+                    <option value="sad">Sad</option>
+                </select>
+                <div class="form-row">
+                    <textarea name="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation"></textarea>
+                </div>
+                <div class="form-row">
+                    <textarea name="partnerGoal" id="partnerGoal" placeholder="Goal of the Day"></textarea>
+                </div>
+            </div>
+            <div class="form-col-right">
+                <p id="today-date"></p>
+                <h5>Would You Rather?</h5>
+                <p>ooonga boonga</p>
+                    <form id="questionForm">
+                        <input type="radio" name="questions" value="choiceA" id="choiceA">
+                        <label for="choiceA">choice a</label>
+                        <input type="radio" name="questions" value="choiceB" id="choiceB">
+                        <label for="choiceB">choice b</label>
+                    </form>
+            </div>
         </div>
     </form>
-
-    <h2>Tasks</h2>
-    <ul id="taskList">
-
-    </ul>
-
-
     <script src="script.js"></script>
 </body>
-
 </html>
