@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Design a prototype web application for a chosen scope",
   "scripts": {
-    "start": "node server.js",
-    "prestart": "parcel build ./public/index.html",
-    "dev": "parcel serve ./public/index.html",
+    "start": "rm -rf .parcel-cache && node server.js",
+    "prestart": "rm -rf .parcel-cache && parcel build ./public/index.html",
+    "dev": "rm -rf .parcel-cache && parcel serve ./public/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
