@@ -1,3 +1,5 @@
+// localStorage.removeItem("storeMsg")
+
 const form = document.getElementById("msgForm")
 const msgList = document.getElementById("msgList")
 
@@ -14,14 +16,24 @@ class Messages {
         var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
         this.listOfMsgs.push(newMsg)
         this.displayMsg(newMsg)
+        
+        let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
+        if (storeMsg === null){
+            console.log("init array")
+            storeMsg = new Array(newMsg)
+        } else {
+            console.log("add to array")
+            storeMsg.push(newMsg);
+        }
+        localStorage.setItem("storeMsg", JSON.stringify(storeMsg));
+        updateLog();
     }
 
     displayMsg(msg) {
 
         // let item = document.createElement("li")
         // item.id = "msg-card"
-
-        var msgCard = document.createElement("pre")
+        var msgCard = document.createElement("div")
         msgCard.id = msg.id
         msgCard.className = "container"
 
@@ -63,6 +75,8 @@ class Messages {
                     <p>${msg.answer}</p>
             </div>
             `
+
+        console.log(msgCard)
         // item.append(msgCard)
         // msgList.appendChild(item)
         form.reset()
@@ -70,21 +84,29 @@ class Messages {
         let delButton = document.createElement("button")
         let delButtonText = document.createTextNode("Delete")
         delButton.appendChild(delButtonText)
-        msgCard.appendChild(delButton)
+        msgCard += delButton
 
         delButton.addEventListener("click", function (event) {
             listOfMsgs = listOfMsgs.filter(msg => msg.id !== msgCard.getAttribute('msg-card'))
             console.log(listOfMsgs)
         })
 
-        let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
-        if (storeMsg == null){
-            storeMsg = [msgCard];
-        } else {
-            storeMsg.push(msgCard);
-        }
-        localStorage.setItem("storeMsg", JSON.stringify(msgCard, undefined, 2));
-        updateLog();
+        // if (!JSON.parse(localStorage.getItem("diaryLog"))) {
+        //     localStorage.setItem("diaryLog", JSON.parse(JSON.stringify([msgCard])))
+        // } else {
+        //     var localStorageData = JSON.parse(localStorage.getItem("diaryLog"));
+        //     localStorageData.push(msgCard);
+        //     localStorage.setItem("diaryLog", JSON.parse(JSON.stringify(localStorageData)))
+        // }
+        // let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
+        // if (storeMsg == null){
+        //     storeMsg = [msgCard];
+        // } else {
+        //     storeMsg.push(msgCard);
+        // }
+        // let convertMsg = JSON.parse(JSON.stringify(cardMsg))
+        // localStorage.setItem("storeMsg", );
+        // updateLog();
     }
 
 }
@@ -112,11 +134,9 @@ form.addEventListener("submit", function (event) {
     var msgAffirm = form.elements.partnerAffirmation.value
     var msgGoal = form.elements.partnerGoal.value
     var msgAnswer = form.querySelector('input[name="partnerQuestion"]:checked').value
-    console.log(document.getElementById("questionPrompt").innerText)
     var msgQuestion = document.getElementById("questionPrompt").innerText
     var msgId = Math.floor(Math.random() * Date.now())
     var msgDate = document.getElementById("today-date").innerText
-    console.log(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
     listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
     console.log(listMsgs.listOfMsgs)
 })
@@ -174,15 +194,13 @@ function generateQuestion(){
     var changeChoiceBVal = document.getElementById("choiceB");
     changeChoiceBVal.value = chosenQuestion[2];
 
-    var changeChoiceBTxt =document.getElementById("choiceBTxt");
+    var changeChoiceBTxt = document.getElementById("choiceBTxt");
     changeChoiceBTxt.innerHTML = chosenQuestion[2];
 
     delete questionList[questionStr];
 }
-window.onload = generateQuestion();
 
 updateLog()
-
 
 let clearButton = document.getElementById('clear');
 
@@ -191,19 +209,48 @@ clearButton.addEventListener('click', function() {
     updateLog();
 })
 
-function updateLog() {
-    let list = msgList;
-    list.innerHTML = "";
+// Load data from local storage test
+function updateLog(){
+    msgList.innerHTML = ""
 
-    let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
-    if (storeMsg !== null) {
-        storeMsg.forEach((msg) => {
-            let listItem = document.createElement("li")
-            listItem.textContent = msg
-            list.appendChild(listItem)
-        })
-    } else {
-        console.log("error")
+    console.log(localStorage.getItem("storeMsg"))
+    let diaryLog = JSON.parse(localStorage.getItem("storeMsg"))
+
+    if (diaryLog !== null) {
+        diaryLog.forEach((msg) => {
+            let item = document.createElement("li")
+            
+            var msgData = document.createElement("div")
+            msgData.id = msg.id
+            msgData.className = "container"
+            msgData.innerHTML =
+                `
+                <div class="form-col-left">
+                    <div class="form-row">
+                        <p>From ${msg.name}</p>
+                    </div>
+                    <div class="form-row">
+                        <p>Today, I feel ${msg.feeling}</p>
+                    </div>
+                    <div class="form-row">
+                        <p>My daily affirmation is</p>
+                        <p>${msg.affirmation}</p>
+                    </div>
+                    <div class="form-row">
+                        <p>My goal today is</p>
+                        <p>${msg.goal}</p>
+                    </div>
+                </div>
+                <div class="form-col-right">
+                    <p>${msg.date}</p>
+                    <h5>Would You Rather?</h5>
+                    <p>${msg.question}</p>
+                        <p>${msg.answer}</p>
+                </div>
+                `
+            item.appendChild(msgData)
+            msgList.appendChild(item)
+        });
     }
 }
 
