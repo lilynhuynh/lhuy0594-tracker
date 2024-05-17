@@ -1,0 +1,46 @@
+// DM San Serif
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+// DM Sans
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000');
+
+
+:root {
+    --cocoabean: #511A18;
+    --mistyrose: #FFE6E5;
+    --rosybrown: #B8817F;
+
+    --ff-dmserif: "DM Serif Display", serif;
+    --ff-dmsans: "DM Sans", sans-serif;
+}
+
+
+h1 {
+    font-family: "DM Serif Display";
+    font-size: 50px;
+    color: var(--cocoabean);
+}
+
+p {
+    font-family: "DM Serif Display";
+    font-size: 16px;
+    color: var(--cocoabean);
+}
+
+input::placeholder, textarea::placeholder, select {
+    font-family: "DM Sans";
+    color: var(--rosybrown)
+}
+
+#nameLabel {
+    font-family: "DM Serif Display";
+    color: var(--cocoabean);
+    font-size: 16px;
+    padding: 5px;
+    display: inline-block;
+}
+
+button {
+    font-family: "DM Sans";
+    color: var(--cocoabean);
+    font-size: 14px;
+}

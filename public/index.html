@@ -6,6 +6,10 @@
     <title>Task Demo</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="scss/main.scss" rel="stylesheet" type="text/css" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -19,12 +23,17 @@
     <form id="msgForm">
         <div class="container">
             <div class="form-col-left">
-                <p>From <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" /></p>
-                <select name="partnerFeeling" id="partnerFeeling" required="true" value="partnerFeeling">
-                    <option value="default" disabled selected>Feeling</option>
-                    <option value="happy">Happy</option>
-                    <option value="sad">Sad</option>
-                </select>
+                <div class="form-row">
+                    <label for="partnerName" id="nameLabel">From:</label>
+                    <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" />
+                </div>
+                <div class="form-row">
+                    <select name="partnerFeeling" id="partnerFeeling" required="true" value="partnerFeeling">
+                        <option value="default" disabled selected>Feeling</option>
+                        <option value="happy">Happy</option>
+                        <option value="sad">Sad</option>
+                    </select>
+                </div>
                 <div class="form-row">
                     <textarea name="partnerAffirmation" value="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation" required="true"></textarea>
                 </div>
@@ -33,24 +42,33 @@
                 </div>
             </div>
             <div class="form-col-right">
-                <p id="today-date"></p>
-                <h5>Would You Rather?</h5>
-                <p id="questionPrompt" name="questionPrompt" value="questionPrompt">ooonga boonga</p>
-                <div id="choices">
-                    <input type="radio" name="partnerQuestion" value="choiceA" id="choiceA" required="true">
-                    <label id="choiceATxt" for="choiceA">choice a</label>
-                    <input type="radio" name="partnerQuestion" value="choiceB" id="choiceB" required="true">
-                    <label id="choiceBTxt" for="choiceB">choice b</label>
+                <div class="form-row">
+                    <p id="today-date" style="float: left;"></p>
+                    <div id="stamp-icon" style="float: right;"></div>
+                </div>
+                <br><br><br><br>
+                <div class="form-row" id="questionContainer">
+                    <p id="questionHead">Would You Rather?</p>
+                    <p id="questionPrompt" name="questionPrompt" value="questionPrompt"></p>
+                    <div id="choices">
+                        <input type="radio" name="partnerQuestion" value="choiceA" id="choiceA" required="true">
+                        <label id="choiceATxt" for="choiceA"></label>
+                        <br>
+                        <input type="radio" name="partnerQuestion" value="choiceB" id="choiceB" required="true">
+                        <label id="choiceBTxt" for="choiceB"></label>
+                    </div>
                 </div>
             </div>
         </div>
-        <input type="submit" name="msg-btn"/>
+        <button name="msg-btn" id="msg-btn">Send Your Message!
+            <img src="images/send.png" id="send-icon"/>
+        </button>
     </form>
     <hr>
     <div id="msg-container">
         
     </div>
     <button id="clear">Clear Log</button>
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>

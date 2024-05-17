@@ -4,7 +4,7 @@
   "description": "Design a prototype web application for a chosen scope",
   "scripts": {
     "start": "rm -rf .parcel-cache && node server.js",
-    "prestart": "rm -rf .parcel-cache && parcel build ./public/index.html",
+    "prestart": "rm -rf .parcel-cache && parcel build ./public/index.html ./static/**",
     "dev": "rm -rf .parcel-cache && parcel serve ./public/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,8 +18,13 @@
     "express": "^4.19.2",
     "sass": "^1.75.0"
   },
+  "staticFiles": {
+    "staticPath": ["./static"],
+    "watcherGlob": "**/*.xml"
+  },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
-    "parcel": "^2.12.0"
+    "parcel": "^2.12.0",
+    "parcel-plugin-static-files-copy": "^2.6.0"
   }
 }

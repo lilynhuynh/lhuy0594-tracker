@@ -77,8 +77,14 @@
 //     }
 // }
 
+:root {
+    --cocoabean: #511A18;
+    --mistyrose: #FFE6E5;
+    --rosybrown: #B8817F;
+}
+
 .title_icon {
-    width:10px;
+    width:40px;
     vertical-align: center;
     text-align: center;
 }
@@ -91,9 +97,17 @@ li {
     list-style-type: none;
 }
 
+#msg_form {
+    width: 500px;
+}
+
 #msgList {
     column-count: 3;
     column-width: 200px;
     column-gap: 20px;
     bottom: 20px;
+}
+
+body {
+    background-color: var(--mistyrose);
 }

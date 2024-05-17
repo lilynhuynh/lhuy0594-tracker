@@ -187,7 +187,7 @@ const questionsList =
     42,Would you rather have an Irish accent or an English accent?,Irish Accent,English Accent
     43,Would you rather kiss a stranger or marry your friend?,Kiss A Stranger,Marry Your Friend
     44,Would you rather be the last person on earth or the first person on earth?,Last Person,First Person
-    45,"Would you rather not be able to control your laughter, or not be able to control your tears?",Laughter,Tears
+    45,"Would you rather not be able to control your laughter or not be able to control your tears?",Laughter,Tears
     46,Would you rather be loved or respected?,Loved,Respected
     47,Would you rather have a magic remote control that can pause or rewind real-life moments or a magic microwave that can instantly heat any food?,Magic Remote Control,Magic Microwave
     48,Would you rather have a flying carpet that constantly malfunctions and drops you from the sky or a magic carpet that only takes you to places you have no interest in visiting?,Malfunctioning Flying Carpet,Random Magic Carpet
@@ -204,12 +204,12 @@ const questionsList =
     59,Would you rather fight one hundred chicken-sized cows or one cow-sized chicken?,One Hundred Chicken-Sized Cows,One Cow-Sized Chicken
     60,Would you rather date someone you met online or who your friend introduced you to?,Online,Introduced by Friend
     61,Would you rather be the only one drunk at a party or the only one sober?⁠,Only One Drunk,Only One Sober
-    62,"Would you prefer to be the only one laughing at someone, or the only one being laughed at?",Only One Laughing,Only One Laughed At
+    62,"Would you prefer to be the only one laughing at someone or the only one being laughed at?",Only One Laughing,Only One Laughed At
     63,Would you rather eat nothing but salad or nothing but dessert for a month?,Only Salad,Only Dessert
     64,Would you rather have a pet parrot that only repeats embarrassing moments from your past or a pet squirrel that steals your socks every day?,Parrot,Squirrel
     65,Would you rather have a pet penguin that constantly slides on your floors or a pet kangaroo that tries to put everything in its pouch?,Penguin,Kangaroo
-    66,"Would you rather have a personal cloud that rains on you wherever you go or a personal spotlight that follows you around, making you the center of attention?",Personal Cloud,Personal Spotlight
-    67,"Would you rather have a personal theme song that plays whenever you walk into a room, or have your own laugh track following your jokes?",Personal Theme Song,Personal Laugh Track
+    66,"Would you rather have a personal cloud that rains on you wherever you go or a personal spotlight that follows you around making you the center of attention?",Personal Cloud,Personal Spotlight
+    67,"Would you rather have a personal theme song that plays whenever you walk into a room or have your own laugh track following your jokes?",Personal Theme Song,Personal Laugh Track
     68,Would you rather have a photographic memory or have the memory of a goldfish?,Photographic Memory,Goldfish Memory
     69,Would you rather have to talk like a pirate for a day or speak in a Shakespearean accent for a week?,Pirate ,Shakespearean
     70,Would you rather eat pizza or ice cream as the only food for the rest of your life?,Pizza,Ice Cream
@@ -250,6 +250,34 @@ const questionsList =
     105,"Would you rather get stuck in an elevator with your ex and their partner or with your partner and their ex?",Your Ex,Your Partner`
 
 // localStorage.removeItem("storeQues")
+generateStamp()
+
+function generateStamp(){
+    var index = JSON.parse(localStorage.getItem("storeStamp")) || 0;
+    const stamp1 = require("../static/stamp1.png");
+    const stamp2 = require("../static/stamp2.png");
+    const stamp3 = require("../static/stamp3.png");
+    const stamp4 = require("../static/stamp4.png");
+    const stamp5 = require("../static/stamp5.png");
+    const stamp6 = require("../static/stamp6.png");
+    const stamp7 = require("../static/stamp7.png");
+    const stamp8 = require("../static/stamp8.png");
+    const stamp9 = require("../static/stamp9.png");    
+    const stamps = [stamp1, stamp2, stamp3, stamp4, stamp5, stamp6, stamp7, stamp8, stamp9];
+    
+    console.log("cur stamp", index);
+
+    var test = document.createElement("img");
+    test.src = stamps[index]
+    var item = document.getElementById("stamp-icon");
+    item.appendChild(test)
+
+    if (index == stamps.length){
+        index = -1;
+    }
+
+    localStorage.setItem("storeStamp", JSON.stringify(index+1))
+}
 
 generateQuestion()
 // insane question list
@@ -266,7 +294,7 @@ function generateQuestion() {
     prompt = line.split(",")
     console.log(prompt)
 
-    localStorage.setItem("storeQues", JSON.stringify(index+1))
+    localStorage.setItem("storeQues", JSON.stringify(index + 1))
 
     var changePrompt = document.getElementById("questionPrompt");
     var changeChoiceAVal = document.getElementById("choiceA");
@@ -296,42 +324,21 @@ function updateLog() {
 
     let diaryLog = JSON.parse(localStorage.getItem("storeMsg"))
     console.log("diaryLog", diaryLog)
-    
+
     if (diaryLog !== null && Array.isArray(diaryLog)) {
         diaryLog.forEach((msg) => {
-        var msgData = document.createElement("div")
-        msgData.id = msg.id
-        msgData.className = "card-container"
-        msgData.innerHTML =
-            `
+            var msgData = document.createElement("div")
+            msgData.id = msg.id
+            msgData.className = "card-container"
+            msgData.innerHTML =
+                `
             <div class= "card-inner">
                 <div class="card-front">
                     <h5>${msg.name}</h5>
                     <p>${msg.date}</p>
                 </div>
                 <div class="card-back">
-                    <div class="form-col-left">
-                        <div class="form-row">
-                            <p>From ${msg.name}</p>
-                        </div>
-                        <div class="form-row">
-                            <p>Today, I feel ${msg.feeling}</p>
-                        </div>
-                        <div class="form-row">
-                            <p>My daily affirmation is</p>
-                            <p>${msg.affirmation}</p>
-                        </div>
-                        <div class="form-row">
-                            <p>My goal today is</p>
-                            <p>${msg.goal}</p>
-                        </div>
-                    </div>
-                    <div class="form-col-right">
-                        <p>${msg.date}</p>
-                        <h5>Would You Rather?</h5>
-                        <p>${msg.question}</p>
-                        <p>${msg.answer}</p>
-                    </div>
+                    <p>Test</p>
                 </div>
             </div>
             `
@@ -340,7 +347,31 @@ function updateLog() {
     }
 }
 
-localStorage.removeItem("storeMsg")
+// localStorage.removeItem("storeMsg")
+
+{/* <div class="form-col-left">
+        <div class="form-row">
+            <p>From ${msg.name}</p>
+        </div>
+        <div class="form-row">
+            <p>Today, I feel ${msg.feeling}</p>
+        </div>
+            <div class="form-row">
+                <p>My daily affirmation is</p>
+                <p>${msg.affirmation}</p>
+            </div>
+            <div class="form-row">
+                <p>My goal today is</p>
+                <p>${msg.goal}</p>
+            </div>
+        </div>
+            <div class="form-col-right">
+                <p>${msg.date}</p>
+                <h5>Would You Rather?</h5>
+                <p>${msg.question}</p>
+                <p>${msg.answer}</p>
+        </div> */}
+
 
 console.log("executed")
 

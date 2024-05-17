@@ -1,6 +1,18 @@
+:root {
+    --cocoabean: #511A18;
+    --mistyrose: #FFE6E5;
+    --rosybrown: #B8817F;
+}
+
+#msgForm {
+    position:relative;
+    text-align: center;
+}
+
 .container {
+    box-shadow: 5px 5px 10px var(--rosybrown);
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -10,15 +22,89 @@
 
     .form-col-left {
         grid-area: form-col-left;
+        margin-right: 35px;
     }
     
     .form-col-right {
         grid-area: form-col-right;
+        border-style: hidden hidden hidden solid;
+        padding-left: 10px;
+        border-color: var(--cocoabean);
+        text-align: center;
     }
 
-    #partnerName, select, textarea {
-        width: 80%;
-    }
+    // #partnerName, select, textarea {
+    //     width: 80%;
+    // }
 
-    background-color: bisque;
+    background-color: var(--rosybrown);
+    border: var(--cocoabean) 10px;
+    border-style: solid;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    height: 300px;
+}
+
+#questionPrompt {
+    font-family: "DM Sans";
+    font-size: 14px;
+}
+
+#choices {
+    font-family: "DM Sans";
+    color: var(--cocoabean);
+    text-align: left;
+    font-size: 14px;
+}
+
+#today-date {
+    text-align: left;
+}
+
+input[type='text'],
+textarea,
+select {
+    border: var(--cocoabean);
+    margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    -ms-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    background-color: white;
+}
+
+#nameLabel {
+    text-align: left;
+}
+
+button {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px var(--cocoabean);
+    transition: all 0.25s;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: whitesmoke;
+    transform: translateY(1px);
+}
+
+button:active {
+    background-color: whitesmoke;
+    box-shadow: 0px 2px var(--cocoabean);
+    transform: translateY(4px);
+}
+
+#send-icon {
+    margin-left: 5px;
+    width: 14px;
+}
+
+#stamp-icon img{
+    width: 60px;
 }
