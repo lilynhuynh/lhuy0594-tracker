@@ -1,0 +1,35 @@
+@media (min-width: 1280px) {
+    #msg-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    h1 {
+        font-size: 60px;
+    }
+    p,
+    #nameLabel {
+        font-size: 24px;
+    }
+    #questionPrompt,
+    #choices,
+    button,
+    select,
+    input::placeholder,
+    textarea::placeholder {
+        font-size: 20px;
+    }
+    textarea {
+        height: 100px;
+    }
+    #stamp-icon {
+        width: 80px;
+    }
+    .form-container {
+        height: 400px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 414px) {
+    #msg-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

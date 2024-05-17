@@ -138,6 +138,7 @@ form.addEventListener("submit", function (event) {
     listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
     console.log(listMsgs.listOfMsgs)
     generateQuestion()
+    generateStamp()
 })
 
 
@@ -252,6 +253,8 @@ const questionsList =
 // localStorage.removeItem("storeQues")
 generateStamp()
 
+// localStorage.removeItem("storeStamp")
+
 function generateStamp(){
     var index = JSON.parse(localStorage.getItem("storeStamp")) || 0;
     const stamp1 = require("../static/stamp1.png");
@@ -262,17 +265,15 @@ function generateStamp(){
     const stamp6 = require("../static/stamp6.png");
     const stamp7 = require("../static/stamp7.png");
     const stamp8 = require("../static/stamp8.png");
-    const stamp9 = require("../static/stamp9.png");    
+    const stamp9 = require("../static/stamp9.png");
     const stamps = [stamp1, stamp2, stamp3, stamp4, stamp5, stamp6, stamp7, stamp8, stamp9];
     
     console.log("cur stamp", index);
 
-    var test = document.createElement("img");
-    test.src = stamps[index]
-    var item = document.getElementById("stamp-icon");
-    item.appendChild(test)
+    var stamp = document.getElementById("stamp-icon");
+    stamp.src = stamps[index];
 
-    if (index == stamps.length){
+    if (index == stamps.length-1){
         index = -1;
     }
 
@@ -294,6 +295,9 @@ function generateQuestion() {
     prompt = line.split(",")
     console.log(prompt)
 
+    if (index == lines.length) {
+        index = -1;
+    }
     localStorage.setItem("storeQues", JSON.stringify(index + 1))
 
     var changePrompt = document.getElementById("questionPrompt");
@@ -336,9 +340,6 @@ function updateLog() {
                 <div class="card-front">
                     <h5>${msg.name}</h5>
                     <p>${msg.date}</p>
-                </div>
-                <div class="card-back">
-                    <p>Test</p>
                 </div>
             </div>
             `
