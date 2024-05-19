@@ -1,9 +1,9 @@
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
     #msg-container {
         grid-template-columns: repeat(3, 1fr);
     }
     h1 {
-        font-size: 60px;
+        font-size: 50px;
     }
     p,
     #nameLabel {
@@ -15,7 +15,7 @@
     select,
     input::placeholder,
     textarea::placeholder {
-        font-size: 20px;
+        font-size: 18px;
     }
     textarea {
         height: 100px;

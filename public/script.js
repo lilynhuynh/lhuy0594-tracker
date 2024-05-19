@@ -79,16 +79,6 @@ class Messages {
         // msgList.appendChild(item)
         form.reset()
 
-        let delButton = document.createElement("button")
-        let delButtonText = document.createTextNode("Delete")
-        delButton.appendChild(delButtonText)
-        msgCard += delButton
-
-        delButton.addEventListener("click", function (event) {
-            listOfMsgs = listOfMsgs.filter(msg => msg.id !== msgCard.getAttribute('msg-card'))
-            console.log(listOfMsgs)
-        })
-
         // if (!JSON.parse(localStorage.getItem("diaryLog"))) {
         //     localStorage.setItem("diaryLog", JSON.parse(JSON.stringify([msgCard])))
         // } else {
@@ -277,34 +267,34 @@ function generateStamp(){
         index = -1;
     }
 
-    localStorage.setItem("storeStamp", JSON.stringify(index+1))
+    localStorage.setItem("storeStamp", JSON.stringify(index+1));
 }
 
 generateQuestion()
 // insane question list
 // Would You Rather Questions provided by Paired Magazine
 function generateQuestion() {
-    var index = JSON.parse(localStorage.getItem("storeQues")) || 0
-    var lines = questionsList.split("\n")
-    let prompt = []
+    var index = JSON.parse(localStorage.getItem("storeQues")) || 0;
+    var lines = questionsList.split("\n");
+    let prompt = [];
 
-    console.log("inside genQues", index)
+    console.log("inside genQues", index);
+    if (index >= lines.length) {
+        index = 0;
+    }
 
-    var line = lines[index].trim()
+    var line = lines[index].trim();
 
-    prompt = line.split(",")
+    prompt = line.split(",");
     console.log(prompt)
 
-    if (index == lines.length) {
-        index = -1;
-    }
-    localStorage.setItem("storeQues", JSON.stringify(index + 1))
+    localStorage.setItem("storeQues", JSON.stringify(index + 1));
 
     var changePrompt = document.getElementById("questionPrompt");
     var changeChoiceAVal = document.getElementById("choiceA");
     var changeChoiceATxt = document.getElementById("choiceATxt");
     var changeChoiceBVal = document.getElementById("choiceB");
-    var changeChoiceBTxt = document.getElementById("choiceBTxt")
+    var changeChoiceBTxt = document.getElementById("choiceBTxt");
 
     changePrompt.innerText = prompt[1];
     changeChoiceAVal.value = prompt[2];
@@ -313,14 +303,82 @@ function generateQuestion() {
     changeChoiceBTxt.innerHTML = prompt[3];
 }
 
+function generateCardImg(){
+    var index = JSON.parse(localStorage.getItem("storeCardImg")) || 0;
+    const card1 = require("../static/card1.png");
+    const card2 = require("../static/card2.png");
+    const card3 = require("../static/card3.png");
+    const card4 = require("../static/card4.png");
+    const card5 = require("../static/card5.png");
+    const card6 = require("../static/card6.png");
+    const cards = [card1, card2, card3, card4, card5, card6];
+    
+    console.log("cur cardbg", index);
+
+    if (index == cards.length){
+        index = 0;
+    }
+
+    localStorage.setItem("storeCardImg", JSON.stringify(index+1))
+    return cards[index];
+}
+
 updateLog()
 
-let clearButton = document.getElementById('clear');
+// let clearButton = document.getElementById('clear');
 
-clearButton.addEventListener('click', function () {
-    localStorage.removeItem('storeMsg');
-    updateLog();
-})
+// clearButton.addEventListener('click', function () {
+//     localStorage.removeItem('storeMsg');
+//     updateLog();
+// })
+
+const deleteLog = (e) => {
+    console.log("delete activated")
+    const parent = e.target.parentElement.parentElement.parentElement.parentElement;
+    if (parent !== null) {
+        console.log(parent.className, parent.id);
+        parent.remove();
+
+        let test = JSON.parse(localStorage.getItem('storeMsg'))
+        if (test !== null && Array.isArray(test)) {
+            test.forEach((msg) => {
+                if (msg.id == parent.id) {
+                    let removeIdx = test.indexOf(msg)
+                    console.log(removeIdx)
+                    test.splice(removeIdx, 1)
+                }
+            })
+        }
+        localStorage.setItem("storeMsg", JSON.stringify(test))
+        updateLog();
+    }
+};
+
+msgList.addEventListener('click', deleteLog);
+
+
+
+// let deleteBtn = document.getElementById("delete-btn");
+
+// deleteBtn.addEventListener('click', function () {
+//     console.log("delete activated")
+//     let parent = deleteBtn.parentElement.id
+//     console.log(parent)
+
+//     // listOfMsgs = listOfMsgs.filter(log => log.id !== msgCard.getAttribute('msg-card'))
+
+    
+// })
+
+// let delButton = document.createElement("button")
+//         let delButtonText = document.createTextNode("Delete")
+//         delButton.appendChild(delButtonText)
+//         msgCard += delButton
+
+//         delButton.addEventListener("click", function (event) {
+//             listOfMsgs = listOfMsgs.filter(msg => msg.id !== msgCard.getAttribute('msg-card'))
+//             console.log(listOfMsgs)
+//         })
 
 // Load data from local storage test
 function updateLog() {
@@ -337,8 +395,11 @@ function updateLog() {
             msgData.innerHTML =
                 `
             <div class= "card-inner">
-                <div class="card-front">
-                    <h5>${msg.name}</h5>
+                <div class="card-front" style="background-image: url(${generateCardImg()})">
+                    <button class="delete-btn">
+                        <img src="${require("../static/thumbtack.png")}" id="tack"/>
+                    </button>
+                    <p>${msg.name}</p>
                     <p>${msg.date}</p>
                 </div>
             </div>
