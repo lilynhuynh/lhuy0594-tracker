@@ -1,0 +1,49 @@
+:root {
+    --cocoabean: #511A18;
+    --mistyrose: #FFE6E5;
+    --rosybrown: #B8817F;
+
+    --ff-dmserif: "DM Serif Display", serif;
+    --ff-dmsans: "DM Sans", sans-serif;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba($color: #ffb8b5, $alpha: 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#card-popup {
+    color: var(--cocoabean);
+    .popup-head {
+        font-size: 24px;
+        font-family: "DM Serif Display";
+    }
+    .popup-text {
+        font-size: 18px;
+        font-family: "DM Sans";
+    }
+    #stamp-icon {
+        width: 80px;
+    }
+    .form-col-left {
+        margin-left: 20px;
+        margin-top: 20px;
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--rosybrown);
+        height: 80%;
+    }
+}
+
+.form-container {
+    box-shadow: none;
+    margin: 0 auto;
+}

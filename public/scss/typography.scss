@@ -26,9 +26,16 @@ p {
     color: var(--cocoabean);
 }
 
-input::placeholder, textarea::placeholder, select {
+input[type='text']::placeholder,
+textarea::placeholder,
+select,
+input[type='text']:focus,
+textarea:focus,
+input[type='text'],
+textarea {
     font-family: "DM Sans";
-    color: var(--rosybrown)
+    color: var(--rosybrown);
+    font-size: 18px;
 }
 
 #nameLabel {
@@ -55,4 +62,13 @@ button {
     color: var(--cocoabean);
     text-align: left;
     font-size: 14px;
+}
+
+.card-preview {
+    .date {
+        font-family: "DM Sans";
+    }
+    p {
+        font-size: 18px;
+    }
 }

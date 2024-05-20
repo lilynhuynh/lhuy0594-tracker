@@ -2,7 +2,7 @@ const form = document.getElementById("msgForm")
 const msgList = document.getElementById("msg-container")
 
 var todayDate = new Date();
-var todayDateStr = todayDate.toLocaleString();
+var todayDateStr = (todayDate.getMonth()+1)+"/"+(todayDate.getDate())+"/"+(todayDate.getFullYear());
 document.getElementById("today-date").innerHTML = todayDateStr
 
 class Messages {
@@ -13,7 +13,7 @@ class Messages {
     addMsg(name, feeling, affirmation, goal, answer, question, id, date) {
         var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
         this.listOfMsgs.push(newMsg)
-        this.displayMsg(newMsg)
+        form.reset();
 
         let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
         if (storeMsg === null || !(Array.isArray(storeMsg))) {
@@ -67,7 +67,10 @@ class Messages {
                 </div>
             </div>
             <div class="form-col-right">
-                <p>${msg.date}</p>
+                <div class="form-row">
+                    <p style="float: left">${msg.date}</p>
+                    <img id="stamp-id" style="float: right;" src="${generateStamp()}"/>
+                </div>
                 <h5>Would You Rather?</h5>
                 <p>${msg.question}</p>
                     <p>${msg.answer}</p>
@@ -128,7 +131,9 @@ form.addEventListener("submit", function (event) {
     listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
     console.log(listMsgs.listOfMsgs)
     generateQuestion()
-    generateStamp()
+
+    var stamp = document.getElementById("stamp-icon");
+    stamp.src = generateStamp();
 })
 
 
@@ -174,7 +179,7 @@ const questionsList =
     38,Would you rather hug or hold hands?,Hug,Hold Hands
     39,Would you rather delete Instagram or TikTok?,Instagram,TikTok
     40,Would you rather have to communicate solely through interpretive dance for a day or speak only in puns for a week?,Interpretive Dance,Speak in Puns
-    41,"Would you rather be able to turn invisible, but only when no one is looking, or have the ability to teleport but only to places you've never been before?",Invisible,Teleport
+    41,"Would you rather be able to turn invisible but only when no one is looking or have the ability to teleport but only to places you've never been before?",Invisible,Teleport
     42,Would you rather have an Irish accent or an English accent?,Irish Accent,English Accent
     43,Would you rather kiss a stranger or marry your friend?,Kiss A Stranger,Marry Your Friend
     44,Would you rather be the last person on earth or the first person on earth?,Last Person,First Person
@@ -220,9 +225,9 @@ const questionsList =
     84,Would you rather smell like onions or have permanent garlic breath?,Smell like Onions,Permanent Garlic Breath
     85,Would you rather drink sour milk or eat moldy bread?,Sour Milk,Moldy Bread
     86,Would you rather only be able to speak in riddles or have to sing every sentence?,Speak in Riddles,Sing Every Sentence
-    87,"Would you rather be able to speak to animals, but they all have annoying voices, or be able to speak any language but only while wearing a chicken costume?",Speak to Animals with Annoying Voices,Speak any Language only with Chicken Costume
+    87,"Would you rather be able to speak to animals but they all have annoying voices or be able to speak any language but only while wearing a chicken costume?",Speak to Animals with Annoying Voices,Speak any Language only with Chicken Costume
     88,Would you prefer to be remembered as successful or as kind?,Successful,Kind
-    89,"Would you rather have a successful career but limited time for family, or a less successful career with more time for each other and your future family?","Successful Career, Limited Family Time","Less Successful Career, More Family Time"
+    89,"Would you rather have a successful career but limited time for family or a less successful career with more time for each other and your future family?","Successful Career, Limited Family Time","Less Successful Career, More Family Time"
     90,Would you rather meet Taylor Swift or Harry Styles?,Taylor Swift ,Harry Styles
     91,Would you rather be able to teleport or fly?,Teleport,Fly
     92,Would you rather have ten close friends or one best friend?,Ten Close Friends,One Best Friend
@@ -241,7 +246,8 @@ const questionsList =
     105,"Would you rather get stuck in an elevator with your ex and their partner or with your partner and their ex?",Your Ex,Your Partner`
 
 // localStorage.removeItem("storeQues")
-generateStamp()
+var stamp = document.getElementById("stamp-icon");
+stamp.src = generateStamp()
 
 // localStorage.removeItem("storeStamp")
 
@@ -260,14 +266,12 @@ function generateStamp(){
     
     console.log("cur stamp", index);
 
-    var stamp = document.getElementById("stamp-icon");
-    stamp.src = stamps[index];
-
-    if (index == stamps.length-1){
-        index = -1;
+    if (index == stamps.length){
+        index = 0;
     }
 
     localStorage.setItem("storeStamp", JSON.stringify(index+1));
+    return stamps[index];
 }
 
 generateQuestion()
@@ -332,55 +336,118 @@ updateLog()
 //     updateLog();
 // })
 
-const deleteLog = (e) => {
-    console.log("delete activated")
-    const parent = e.target.parentElement.parentElement.parentElement.parentElement;
-    if (parent !== null) {
-        console.log(parent.className, parent.id);
-        parent.remove();
+const logInteraction = (e) => {
+    // if (containingElement.contains(e.target)){
 
-        let test = JSON.parse(localStorage.getItem('storeMsg'))
-        if (test !== null && Array.isArray(test)) {
-            test.forEach((msg) => {
-                if (msg.id == parent.id) {
-                    let removeIdx = test.indexOf(msg)
-                    console.log(removeIdx)
-                    test.splice(removeIdx, 1)
+    // } else {
+
+    // }
+    if (e.target.matches('img')){
+        console.log("btn detected")
+        const parent = e.target.parentElement.parentElement.parentElement.parentElement;
+        if (parent !== null) {
+            console.log(parent.className, parent.id);
+            parent.remove();
+
+            let test = JSON.parse(localStorage.getItem('storeMsg'))
+            if (test !== null && Array.isArray(test)) {
+                test.forEach((msg) => {
+                    if (msg.id == parent.id) {
+                        let removeIdx = test.indexOf(msg)
+                        console.log(removeIdx)
+                        test.splice(removeIdx, 1)
+                    }
+                })
+            }
+            localStorage.setItem("storeMsg", JSON.stringify(test))
+            updateLog();
+        }
+    } else {
+        console.log("card clicked");
+        let elem = e.target
+        let getMsg;
+        switch (elem.className){
+            case "card-front": //CHECKED
+                console.log("front clicked");
+                getMsg = elem.parentElement.parentElement.id;
+                break;
+            case "name": //CHECKED
+                console.log("name clicked");
+                getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
+                break;
+            case "date": //CHECKED
+                console.log("date clicked");
+                getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
+                console.log(getMsg);
+                break;
+            case "card-preview": //CHECKED
+                console.log("preview clicked");
+                getMsg = elem.parentElement.parentElement.parentElement.id;
+                break;
+            default:
+                console.log("not included");
+                break;
+        }
+        console.log(getMsg)
+        let msgInfo = JSON.parse(localStorage.getItem("storeMsg"));
+        
+        if (msgInfo !== null && Array.isArray(msgInfo)) {
+            msgInfo.forEach((msg) => {
+                if (msg.id == getMsg) {
+                    let popup = document.createElement("div");
+                    popup.className = "overlay";
+                    popup.id = "card-popup";
+                    let container = document.createElement("div");
+                    container.className = "form-container";
+                    container.innerHTML =
+                        `<div class="form-col-left">
+                            <div class="form-row">
+                                <p class="popup-head">From ${msg.name},</p>
+                                <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
+                                <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
+                                <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
+                            </div>
+                        </div>
+                        <div class="form-col-right">
+                            <div class="form-row">
+                                <p class="popup-head" style="float: left">${msg.date}</p>
+                                <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
+                            </div>
+                            <br><br><br><br>
+                            <div class="form-row">
+                                <h5 class="popup-head">Would You Rather?</h5>
+                                <p class="popup-text">${msg.question}</p>
+                                <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
+                            </div>
+                            <button class="return">Return to Home</button>
+                        </div>`;
+                    
+                    popup.appendChild(container);
+                    console.log(popup);
+                    let add = document.getElementById("msg-container");
+                    add.after(popup)
                 }
             })
         }
-        localStorage.setItem("storeMsg", JSON.stringify(test))
-        updateLog();
+        
+        console.log("executed card")
     }
 };
 
-msgList.addEventListener('click', deleteLog);
+msgList.addEventListener('click', logInteraction);
 
+const closePopup = (e) => {
+    console.log(e)
+    if (e.target.matches("button")){
+        console.log("close popup")
+        let popup = document.getElementById("card-popup");
+        console.log(popup)
+        document.body.removeChild(popup)
+    }
+}
 
+document.body.addEventListener('click', closePopup);
 
-// let deleteBtn = document.getElementById("delete-btn");
-
-// deleteBtn.addEventListener('click', function () {
-//     console.log("delete activated")
-//     let parent = deleteBtn.parentElement.id
-//     console.log(parent)
-
-//     // listOfMsgs = listOfMsgs.filter(log => log.id !== msgCard.getAttribute('msg-card'))
-
-    
-// })
-
-// let delButton = document.createElement("button")
-//         let delButtonText = document.createTextNode("Delete")
-//         delButton.appendChild(delButtonText)
-//         msgCard += delButton
-
-//         delButton.addEventListener("click", function (event) {
-//             listOfMsgs = listOfMsgs.filter(msg => msg.id !== msgCard.getAttribute('msg-card'))
-//             console.log(listOfMsgs)
-//         })
-
-// Load data from local storage test
 function updateLog() {
     msgList.innerHTML = ""
 
@@ -399,41 +466,17 @@ function updateLog() {
                     <button class="delete-btn">
                         <img src="${require("../static/thumbtack.png")}" id="tack"/>
                     </button>
-                    <p>${msg.name}</p>
-                    <p>${msg.date}</p>
+                    <div class="card-preview">
+                        <p class="name">${msg.name}</p>
+                        <p class="date">${msg.date}</p>
+                    </div>
                 </div>
             </div>
             `
-            msgList.appendChild(msgData)
+            msgList.append(msgData)
         });
     }
 }
-
-// localStorage.removeItem("storeMsg")
-
-{/* <div class="form-col-left">
-        <div class="form-row">
-            <p>From ${msg.name}</p>
-        </div>
-        <div class="form-row">
-            <p>Today, I feel ${msg.feeling}</p>
-        </div>
-            <div class="form-row">
-                <p>My daily affirmation is</p>
-                <p>${msg.affirmation}</p>
-            </div>
-            <div class="form-row">
-                <p>My goal today is</p>
-                <p>${msg.goal}</p>
-            </div>
-        </div>
-            <div class="form-col-right">
-                <p>${msg.date}</p>
-                <h5>Would You Rather?</h5>
-                <p>${msg.question}</p>
-                <p>${msg.answer}</p>
-        </div> */}
-
 
 console.log("executed")
 
