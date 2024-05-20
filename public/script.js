@@ -227,7 +227,7 @@ const questionsList =
     86,Would you rather only be able to speak in riddles or have to sing every sentence?,Speak in Riddles,Sing Every Sentence
     87,"Would you rather be able to speak to animals but they all have annoying voices or be able to speak any language but only while wearing a chicken costume?",Speak to Animals with Annoying Voices,Speak any Language only with Chicken Costume
     88,Would you prefer to be remembered as successful or as kind?,Successful,Kind
-    89,"Would you rather have a successful career but limited time for family or a less successful career with more time for each other and your future family?","Successful Career, Limited Family Time","Less Successful Career, More Family Time"
+    89,"Would you rather have a successful career but limited time for family or a less successful career with more time for each other and your future family?",Successful Career but Limited Family Time,Less Successful Career but More Family Time
     90,Would you rather meet Taylor Swift or Harry Styles?,Taylor Swift ,Harry Styles
     91,Would you rather be able to teleport or fly?,Teleport,Fly
     92,Would you rather have ten close friends or one best friend?,Ten Close Friends,One Best Friend
