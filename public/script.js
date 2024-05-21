@@ -1,84 +1,11 @@
-const form = document.getElementById("msgForm")
-const msgList = document.getElementById("msg-container")
+const form = document.getElementById("msgForm");
+const msgList = document.getElementById("msg-container");
 
 var todayDate = new Date();
 var todayDateStr = (todayDate.getMonth()+1)+"/"+(todayDate.getDate())+"/"+(todayDate.getFullYear());
-document.getElementById("today-date").innerHTML = todayDateStr
+document.getElementById("today-date").innerHTML = todayDateStr;
 
-class Messages {
-    constructor() {
-        this.listOfMsgs = []
-    }
-
-    addMsg(name, feeling, affirmation, goal, answer, question, id, date) {
-        var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
-        this.listOfMsgs.push(newMsg)
-        this.sendMsg();
-
-        setTimeout(function() {
-            let removeStamp = document.getElementById("form-header");
-            removeStamp.removeChild(document.getElementById("send-stamp"));
-            form.reset()
-            console.log("form reseted")
-            console.log("stamp removed")
-            generateQuestion()
-            var stamp = document.getElementById("stamp-icon");
-            stamp.src = generateStamp();
-        }, 1000);
-
-        let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
-        if (storeMsg === null || !(Array.isArray(storeMsg))) {
-            console.log("init array")
-            storeMsg = new Array(newMsg)
-        } else {
-            console.log("add to array")
-            storeMsg.push(newMsg);
-        }
-        localStorage.setItem("storeMsg", JSON.stringify(storeMsg));
-        updateLog();
-    }
-
-    sendMsg() {
-        let send = document.createElement("img");
-        send.id = "send-stamp";
-        send.src = require("../static/sent.png");
-        console.log (stamp);
-
-        let grabStamp = document.getElementById("stamp-icon");
-        grabStamp.after(send);
-    }
-
-}
-
-class Message {
-    constructor(name, feeling, affirmation, goal, answer, question, id, date) {
-        this.name = name
-        this.feeling = feeling
-        this.affirmation = affirmation
-        this.goal = goal
-        this.answer = answer
-        this.question = question
-        this.id = id
-        this.date = date
-    }
-}
-
-var listMsgs = new Messages()
-
-form.addEventListener("submit", function (event) {
-    console.log("submit detected")
-    event.preventDefault();
-    var msgName = form.elements.partnerName.value
-    var msgFeel = form.elements.partnerFeeling.value
-    var msgAffirm = form.elements.partnerAffirmation.value
-    var msgGoal = form.elements.partnerGoal.value
-    var msgAnswer = form.querySelector('input[name="partnerQuestion"]:checked').value
-    var msgQuestion = document.getElementById("questionPrompt").innerText
-    var msgId = Math.floor(Math.random() * Date.now())
-    var msgDate = document.getElementById("today-date").innerText
-    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
-})
-
+// Would You Rather Questions provided by Paired Magazine
 const questionsList =
     `0,Would you rather have to go on 100 first dates or have to spend the rest of your life with your next date? ,100 First Dates,Forever With Next Date
     1,"Would you rather always know the truth no matter how painful or live in blissful ignorance?",Always Know Truth,Blissful Ignorance
@@ -185,13 +112,86 @@ const questionsList =
     102,Would you rather only be able to whisper or only be able to shout?,Whisper,Shout
     103,Would you rather win a million dollars or earn a million dollars?,Win Million Dollars,Earn Million Dollars
     104,Would you rather date someone younger than you or older than you?,Younger,Older
-    105,"Would you rather get stuck in an elevator with your ex and their partner or with your partner and their ex?",Your Ex,Your Partner`
+    105,"Would you rather get stuck in an elevator with your ex and their partner or with your partner and their ex?",Your Ex,Your Partner`;
 
-// localStorage.removeItem("storeQues")
 var stamp = document.getElementById("stamp-icon");
-stamp.src = generateStamp()
+stamp.src = generateStamp();
+generateQuestion();
+updateLog();
 
-// localStorage.removeItem("storeStamp")
+class Messages {
+    constructor() {
+        this.listOfMsgs = []
+    }
+
+    addMsg(name, feeling, affirmation, goal, answer, question, id, date) {
+        var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
+        this.listOfMsgs.push(newMsg)
+        this.sendMsg();
+
+        setTimeout(function() {
+            let removeStamp = document.getElementById("form-header");
+            removeStamp.removeChild(document.getElementById("send-stamp"));
+            form.reset()
+            console.log("form reseted")
+            console.log("stamp removed")
+            generateQuestion()
+            var stamp = document.getElementById("stamp-icon");
+            stamp.src = generateStamp();
+        }, 1000);
+
+        let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
+        if (storeMsg === null || !(Array.isArray(storeMsg))) {
+            console.log("init array")
+            storeMsg = new Array(newMsg)
+        } else {
+            console.log("add to array")
+            storeMsg.push(newMsg);
+        }
+        localStorage.setItem("storeMsg", JSON.stringify(storeMsg));
+        updateLog();
+    }
+
+    sendMsg() {
+        let send = document.createElement("img");
+        send.id = "send-stamp";
+        send.src = require("../static/sent.png");
+        console.log (stamp);
+
+        let grabStamp = document.getElementById("stamp-icon");
+        grabStamp.after(send);
+    }
+
+}
+
+class Message {
+    constructor(name, feeling, affirmation, goal, answer, question, id, date) {
+        this.name = name
+        this.feeling = feeling
+        this.affirmation = affirmation
+        this.goal = goal
+        this.answer = answer
+        this.question = question
+        this.id = id
+        this.date = date
+    }
+}
+
+var listMsgs = new Messages()
+
+form.addEventListener("submit", function (event) {
+    console.log("submit detected")
+    event.preventDefault();
+    var msgName = form.elements.partnerName.value
+    var msgFeel = form.elements.partnerFeeling.value
+    var msgAffirm = form.elements.partnerAffirmation.value
+    var msgGoal = form.elements.partnerGoal.value
+    var msgAnswer = form.querySelector('input[name="partnerQuestion"]:checked').value
+    var msgQuestion = document.getElementById("questionPrompt").innerText
+    var msgId = Math.floor(Math.random() * Date.now())
+    var msgDate = document.getElementById("today-date").innerText
+    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
+})
 
 function generateStamp(){
     var index = JSON.parse(localStorage.getItem("storeStamp")) || 0;
@@ -205,35 +205,23 @@ function generateStamp(){
     const stamp8 = require("../static/stamp8.png");
     const stamp9 = require("../static/stamp9.png");
     const stamps = [stamp1, stamp2, stamp3, stamp4, stamp5, stamp6, stamp7, stamp8, stamp9];
-    
-    console.log("cur stamp", index);
 
     if (index == stamps.length){
         index = 0;
     }
-
     localStorage.setItem("storeStamp", JSON.stringify(index+1));
     return stamps[index];
 }
 
-generateQuestion()
-// insane question list
-// Would You Rather Questions provided by Paired Magazine
 function generateQuestion() {
     var index = JSON.parse(localStorage.getItem("storeQues")) || 0;
     var lines = questionsList.split("\n");
     let prompt = [];
-
-    console.log("inside genQues", index);
     if (index >= lines.length) {
         index = 0;
     }
-
     var line = lines[index].trim();
-
     prompt = line.split(",");
-    console.log(prompt)
-
     localStorage.setItem("storeQues", JSON.stringify(index + 1));
 
     var changePrompt = document.getElementById("questionPrompt");
@@ -258,30 +246,14 @@ function generateCardImg(){
     const card5 = require("../static/card5.png");
     const card6 = require("../static/card6.png");
     const cards = [card1, card2, card3, card4, card5, card6];
-
     if (index == cards.length){
         index = 0;
     }
-
-    localStorage.setItem("storeCardImg", JSON.stringify(index+1))
+    localStorage.setItem("storeCardImg", JSON.stringify(index+1));
     return cards[index];
 }
 
-updateLog()
-
-// let clearButton = document.getElementById('clear');
-
-// clearButton.addEventListener('click', function () {
-//     localStorage.removeItem('storeMsg');
-//     updateLog();
-// })
-
 const logInteraction = (e) => {
-    // if (containingElement.contains(e.target)){
-
-    // } else {
-
-    // }
     if (e.target.matches('img')){
         console.log("btn detected")
         const parent = e.target.parentElement.parentElement.parentElement.parentElement;
@@ -307,20 +279,20 @@ const logInteraction = (e) => {
         let elem = e.target
         let getMsg;
         switch (elem.className){
-            case "card-front": //CHECKED
+            case "card-front":
                 console.log("front clicked");
                 getMsg = elem.parentElement.parentElement.id;
                 break;
-            case "name": //CHECKED
+            case "name":
                 console.log("name clicked");
                 getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
                 break;
-            case "date": //CHECKED
+            case "date":
                 console.log("date clicked");
                 getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
                 console.log(getMsg);
                 break;
-            case "card-preview": //CHECKED
+            case "card-preview":
                 console.log("preview clicked");
                 getMsg = elem.parentElement.parentElement.parentElement.id;
                 break;
@@ -352,7 +324,7 @@ const logInteraction = (e) => {
                             <div class="form-row" id="popout-header">
                                 <p class="popup-head" style="float: left">${msg.date}</p>
                                 <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
-                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}"/>
+                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
                             </div>
                             <br><br><br><br>
                             <div class="form-row">
@@ -364,39 +336,33 @@ const logInteraction = (e) => {
                         </div>`;
                     
                     popup.appendChild(container);
-                    console.log(popup);
                     let add = document.getElementById("msg-container");
-                    add.after(popup)
+                    add.after(popup);
                 }
-            })
+            });
         }
-        
-        console.log("executed card")
     }
 };
-
-msgList.addEventListener('click', logInteraction);
 
 const closePopup = (e) => {
     let secLastChild = document.body.lastElementChild.previousElementSibling;
     if (secLastChild.className == "overlay"){
         if (e.target.matches("button")){
-            console.log("close popup")
             let popup = document.getElementById("card-popup");
             document.body.removeChild(popup)
         }
     } else {
         return;
     }
-}
+};
 
+msgList.addEventListener('click', logInteraction);
 document.body.addEventListener('click', closePopup);
 
 function updateLog() {
     msgList.innerHTML = ""
 
     let diaryLog = JSON.parse(localStorage.getItem("storeMsg"))
-    console.log("diaryLog", diaryLog)
 
     if (diaryLog !== null && Array.isArray(diaryLog)) {
         diaryLog.forEach((msg) => {
@@ -407,7 +373,7 @@ function updateLog() {
                 `
             <div class= "card-inner">
                 <div class="card-front" style="background-image: url(${generateCardImg()})">
-                    <button class="delete-btn">
+                    <button class="delete-btn" title="Remove Message?">
                         <img src="${require("../static/thumbtack.png")}" id="tack"/>
                     </button>
                     <div class="card-preview">

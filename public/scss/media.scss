@@ -2,30 +2,6 @@
     #msg-container {
         grid-template-columns: repeat(3, 1fr);
     }
-    h1 {
-        font-size: 50px;
-    }
-    p,
-    #nameLabel {
-        font-size: 24px;
-    }
-    #questionPrompt,
-    #choices,
-    button,
-    select,
-    input::placeholder,
-    textarea::placeholder {
-        font-size: 18px;
-    }
-    textarea {
-        height: 100px;
-    }
-    #stamp-icon {
-        width: 80px;
-    }
-    .form-container {
-        height: 400px;
-    }
 }
 
 @media (min-width: 300px) and (max-width: 414px) {

@@ -6,6 +6,7 @@
     overflow: hidden;
     position: relative;
     perspective: 1000;
+    filter: drop-shadow(5px 5px 10px var(--rosybrown));
 }
 
 @keyframes swing {
@@ -44,15 +45,13 @@
     z-index: 0;
 }
 
-
 .delete-btn {
     box-shadow: none;
     border: none;
     appearance: none;
     background-color: transparent;
-    position: absolute;
+    position: relative;
     z-index: 10;
-    position: absolute;
     margin: 0 auto;
     top: 10px;
     left: 0;
