@@ -13,7 +13,18 @@ class Messages {
     addMsg(name, feeling, affirmation, goal, answer, question, id, date) {
         var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
         this.listOfMsgs.push(newMsg)
-        form.reset();
+        this.sendMsg();
+
+        setTimeout(function() {
+            let removeStamp = document.getElementById("form-header");
+            removeStamp.removeChild(document.getElementById("send-stamp"));
+            form.reset()
+            console.log("form reseted")
+            console.log("stamp removed")
+            generateQuestion()
+            var stamp = document.getElementById("stamp-icon");
+            stamp.src = generateStamp();
+        }, 1000);
 
         let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
         if (storeMsg === null || !(Array.isArray(storeMsg))) {
@@ -27,77 +38,14 @@ class Messages {
         updateLog();
     }
 
-    displayMsg(msg) {
+    sendMsg() {
+        let send = document.createElement("img");
+        send.id = "send-stamp";
+        send.src = require("../static/sent.png");
+        console.log (stamp);
 
-        // let item = document.createElement("li")
-        // item.id = "msg-card"
-        var msgCard = document.createElement("div")
-        msgCard.id = msg.id
-        msgCard.className = "container"
-
-        // // Left side of the card
-        // var cardLeft = document.createElement("div")
-        // cardLeft.className = "form-col-left"
-        // msgCard.appendChild(cardLeft)
-
-        // var nameRow = document.createElement("div")
-        // nameRow.class = "form-row"
-        // cardLeft.appendChild(nameRow)
-
-        // var partnerName = document.createElement("p")
-        // partnerName.innerText = `From: ${msg.name}`
-        // nameRow.appendChild(partnerName)
-
-        msgCard.innerHTML =
-            `
-            <div class="form-col-left">
-                <div class="form-row">
-                    <p>From ${msg.name}</p>
-                </div>
-                <div class="form-row">
-                    <p>Today, I feel ${msg.feeling}</p>
-                </div>
-                <div class="form-row">
-                    <p>My daily affirmation is</p>
-                    <p>${msg.affirmation}</p>
-                </div>
-                <div class="form-row">
-                    <p>My goal today is</p>
-                    <p>${msg.goal}</p>
-                </div>
-            </div>
-            <div class="form-col-right">
-                <div class="form-row">
-                    <p style="float: left">${msg.date}</p>
-                    <img id="stamp-id" style="float: right;" src="${generateStamp()}"/>
-                </div>
-                <h5>Would You Rather?</h5>
-                <p>${msg.question}</p>
-                    <p>${msg.answer}</p>
-            </div>
-            `
-
-        console.log(msgCard)
-        // item.append(msgCard)
-        // msgList.appendChild(item)
-        form.reset()
-
-        // if (!JSON.parse(localStorage.getItem("diaryLog"))) {
-        //     localStorage.setItem("diaryLog", JSON.parse(JSON.stringify([msgCard])))
-        // } else {
-        //     var localStorageData = JSON.parse(localStorage.getItem("diaryLog"));
-        //     localStorageData.push(msgCard);
-        //     localStorage.setItem("diaryLog", JSON.parse(JSON.stringify(localStorageData)))
-        // }
-        // let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
-        // if (storeMsg == null){
-        //     storeMsg = [msgCard];
-        // } else {
-        //     storeMsg.push(msgCard);
-        // }
-        // let convertMsg = JSON.parse(JSON.stringify(cardMsg))
-        // localStorage.setItem("storeMsg", );
-        // updateLog();
+        let grabStamp = document.getElementById("stamp-icon");
+        grabStamp.after(send);
     }
 
 }
@@ -129,13 +77,7 @@ form.addEventListener("submit", function (event) {
     var msgId = Math.floor(Math.random() * Date.now())
     var msgDate = document.getElementById("today-date").innerText
     listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
-    console.log(listMsgs.listOfMsgs)
-    generateQuestion()
-
-    var stamp = document.getElementById("stamp-icon");
-    stamp.src = generateStamp();
 })
-
 
 const questionsList =
     `0,Would you rather have to go on 100 first dates or have to spend the rest of your life with your next date? ,100 First Dates,Forever With Next Date
@@ -316,8 +258,6 @@ function generateCardImg(){
     const card5 = require("../static/card5.png");
     const card6 = require("../static/card6.png");
     const cards = [card1, card2, card3, card4, card5, card6];
-    
-    console.log("cur cardbg", index);
 
     if (index == cards.length){
         index = 0;
@@ -401,7 +341,7 @@ const logInteraction = (e) => {
                     container.className = "form-container";
                     container.innerHTML =
                         `<div class="form-col-left">
-                            <div class="form-row">
+                            <div class="form-row" id="popup-msg">
                                 <p class="popup-head">From ${msg.name},</p>
                                 <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
                                 <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
@@ -409,9 +349,10 @@ const logInteraction = (e) => {
                             </div>
                         </div>
                         <div class="form-col-right">
-                            <div class="form-row">
+                            <div class="form-row" id="popout-header">
                                 <p class="popup-head" style="float: left">${msg.date}</p>
                                 <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
+                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}"/>
                             </div>
                             <br><br><br><br>
                             <div class="form-row">
@@ -437,12 +378,15 @@ const logInteraction = (e) => {
 msgList.addEventListener('click', logInteraction);
 
 const closePopup = (e) => {
-    console.log(e)
-    if (e.target.matches("button")){
-        console.log("close popup")
-        let popup = document.getElementById("card-popup");
-        console.log(popup)
-        document.body.removeChild(popup)
+    let secLastChild = document.body.lastElementChild.previousElementSibling;
+    if (secLastChild.className == "overlay"){
+        if (e.target.matches("button")){
+            console.log("close popup")
+            let popup = document.getElementById("card-popup");
+            document.body.removeChild(popup)
+        }
+    } else {
+        return;
     }
 }
 

@@ -41,6 +41,12 @@
         color: var(--rosybrown);
         height: 80%;
     }
+    #send-stamp {
+        width: 170px;
+        z-index: 2px;
+        position: absolute;
+        float: right;
+    }
 }
 
 .form-container {

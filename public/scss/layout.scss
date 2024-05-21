@@ -101,9 +101,42 @@ body {
     max-width: 100%;
     gap: 1rem;
     display: grid;
-    padding-top: 30px
+    // padding-top: 30px
 }
 
-#msgForm {
-    padding-bottom: 30px;
+// #msgForm {
+//     padding-bottom: 30px;
+// }
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    background: url('../images/plane.png') no-repeat top right;
+    background-size: contain;
+    display: block;
+    height: 20px;
+    border: 0;
+    position: relative;
+    width: 90%;
+    top: 0;
+}
+
+hr:before,
+hr:after {
+    content: '';
+    display: block;
+    position: absolute;
+    background: var(--cocoabean);
+    height: 3px;
+    top: 8px;
+}
+
+hr:before {
+    left: 0;
+    right: 50%;
+}
+
+hr:after {
+    right: 0;
+    left: 50%;
 }

@@ -24,11 +24,11 @@
     <form id="msgForm" autocomplete="off">
         <div class="form-container">
             <div class="form-col-left">
-                <div class="form-row">
+                <div class="form-row" id="form-name">
                     <label for="partnerName" id="nameLabel">From:</label>
                     <input type="text" name="partnerName" id="partnerName" required="true" placeholder="Name" />
                 </div>
-                <div class="form-row">
+                <div class="form-row" id="form-feeling">
                     <select name="partnerFeeling" id="partnerFeeling" required="true" value="partnerFeeling">
                         <option value="default" disabled selected>Feeling</option>
                         <option value="happy">Happy</option>
@@ -43,15 +43,15 @@
                         <option value="grateful">Grateful</option>
                     </select>
                 </div>
-                <div class="form-row">
-                    <textarea name="partnerAffirmation" value="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation" required="true"></textarea>
+                <div class="form-row" id="form-affirmation">
+                    <textarea name="partnerAffirmation" value="partnerAffirmation" id="partnerAffirmation" placeholder="Affirmation" required="true" maxlength="50"></textarea>
                 </div>
-                <div class="form-row">
-                    <textarea name="partnerGoal" value="partnerGoal" id="partnerGoal" placeholder="Goal of the Day" required="true"></textarea>
+                <div class="form-row" id="form-goal">
+                    <textarea name="partnerGoal" value="partnerGoal" id="partnerGoal" placeholder="Goal of the Day" required="true" maxlength="50"></textarea>
                 </div>
             </div>
             <div class="form-col-right">
-                <div class="form-row">
+                <div class="form-row" id="form-header">
                     <p id="today-date" style="float: left;"></p>
                     <img id="stamp-icon" style="float: right;"></img>
                 </div>

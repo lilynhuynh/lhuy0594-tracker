@@ -33,10 +33,6 @@
         text-align: center;
     }
 
-    // #partnerName, select, textarea {
-    //     width: 80%;
-    // }
-
     background-color: var(--rosybrown);
     border: var(--cocoabean) 10px;
     border-style: solid;
@@ -88,6 +84,8 @@ button:active {
     transform: translateY(4px);
 }
 
+
+
 #send-icon {
     margin-left: 5px;
     width: 14px;
@@ -96,3 +94,51 @@ button:active {
 #stamp-icon{
     width: 90px;
 }
+
+#form-header #send-stamp {
+    width: 170px;
+    z-index: 2px;
+    top: 0;
+    position: absolute;
+    -webkit-animation-name: sent-stamp;
+    animation-name: sent-stamp;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    opacity: 0;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    float: right;
+}
+
+@keyframes sent-stamp {
+    0% {
+        opacity: 0;}
+    10% {
+        opacity: .50;
+        transform-origin: 50% 50%;
+        transform: scale(5);
+        transition: all .3s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#msg-btn {
+    margin: 20px;
+}
+
+// @keyframes sent-form {
+//     0% {
+//         opacity: 1;
+//     }
+//     25% {
+//         transform: scale(0.75);
+
+//     }
+//     50
+
+// }
