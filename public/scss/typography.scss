@@ -1,25 +1,9 @@
-// Might just merge this into layout
-
-
-// DM San Serif
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
-// DM Sans
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000');
-
-:root {
-    --cocoabean: #511A18;
-    --mistyrose: #FFE6E5;
-    --rosybrown: #B8817F;
-    --ff-dmserif: "DM Serif Display", serif;
-    --ff-dmsans: "DM Sans", sans-serif;
-}
-
+// Checked
 
 h1 {
-    font-family: "DM Serif Display";
+    font-family: $dmserif;
     font-size: 50px;
-    color: var(--cocoabean);
-
+    color: $cocoabean;
     @media (max-width: $max-width) {
         font-size: 30px;
     }
@@ -27,10 +11,9 @@ h1 {
 
 p,
 #nameLabel {
-    font-family: "DM Serif Display";
+    font-family: $dmserif;
     font-size: 24px;
-    color: var(--cocoabean);
-
+    color: $cocoabean;
     @media (max-width: $max-width) {
         font-size: 16px;
     }
@@ -46,10 +29,9 @@ textarea,
 button,
 #questionPrompt,
 #choices {
-    font-family: "DM Sans";
-    color: var(--rosybrown);
+    font-family: $dmsans;
+    color: $rosybrown;
     font-size: 18px;
-
     @media (max-width: $screen-break) {
         font-size: 12px;
     }
@@ -64,7 +46,7 @@ button,
 button,
 #questionPrompt,
 #choices {
-    color: var(--cocoabean);
+    color: $cocoabean;
 }
 
 #choices {
@@ -73,7 +55,7 @@ button,
 
 .card-preview {
     .date {
-        font-family: "DM Sans";
+        font-family: $dmsans;
     }
     p {
         font-size: 18px;
@@ -81,28 +63,23 @@ button,
 }
 
 #card-popup {
-    color: var(--cocoabean);
-
+    color: $cocoabean;
     .popup-head {
         font-size: 24px;
-        font-family: "DM Serif Display";
-
+        font-family: $dmserif;
         @media (max-width: $screen-break) {
             font-size: 18px;
         }
     }
-
     .popup-text {
         font-size: 18px;
-        font-family: "DM Sans";
-
+        font-family: $dmsans;
         @media (max-width: $screen-break) {
             font-size: 12px;
         }
     }
-
     #popup-msg {
-        color: var(--rosybrown);
+        color: $rosybrown;
         word-wrap: break-word;
     }
 }

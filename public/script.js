@@ -1,25 +1,22 @@
-const form = document.getElementById("msgForm");
-const msgList = document.getElementById("msg-container");
+/*
+ * Author's Note:
+ * I went kind of crazy on the script only because I wanted to add a lot of
+ * features such individual deletion as well as working with local storage.
+ * Thus, there may be some optimization issues like long load times, etc. so
+ * I included a buffer screen to hopefully alleviate the responsiveness/load time
+ * of the website.
 
-var todayDate = new Date();
-var todayDateStr = (todayDate.getMonth()+1)+"/"+(todayDate.getDate())+"/"+(todayDate.getFullYear());
-document.getElementById("today-date").innerHTML = todayDateStr;
+ * I will be breaking down each of functions/sections below.
+ */
 
-// Move form-header if mobile screen
-console.log(screen.width)
 
-function checkScreenSize(){
-    if (screen.width <= 780) {
-        var header = document.getElementById("form-header");
-        var leftCol = msgForm.firstElementChild.firstElementChild;
-        leftCol.insertBefore(header, leftCol.firstElementChild);
-    }
-}
-checkScreenSize();
-window.addEventListener("resize", checkScreenSize());
 
-// Would You Rather Questions provided by Paired Magazine
-const questionsList =
+//
+// Global Variables
+//
+const form = document.getElementById("msgForm"); // Message form element
+const msgList = document.getElementById("msg-container"); // Message log element
+const questionsList = // Would You Rather Questions provided by Paired Magazine
     `0,Would you rather have to go on 100 first dates or have to spend the rest of your life with your next date? ,100 First Dates,Forever With Next Date
     1,"Would you rather always know the truth no matter how painful or live in blissful ignorance?",Always Know Truth,Blissful Ignorance
     2,Would you rather have your art hung in a museum or have your portrait hung in a gallery?,Art in Museum,Portrait in Gallery
@@ -127,38 +124,72 @@ const questionsList =
     104,Would you rather date someone younger than you or older than you?,Younger,Older
     105,"Would you rather get stuck in an elevator with your ex and their partner or with your partner and their ex?",Your Ex,Your Partner`;
 
+
+
+//
+// On Window Initiation
+//
+
+/* Initialize Screen Size */
+checkScreenSize();
+window.addEventListener("resize", checkScreenSize());
+
+/* Initialize Form Date */
+var todayDate = new Date();
+var todayDateStr = (todayDate.getMonth() + 1) + "/" + (todayDate.getDate()) + "/" + (todayDate.getFullYear());
+document.getElementById("today-date").innerHTML = todayDateStr;
+
+/* Initialize Form Stamp */
 var stamp = document.getElementById("stamp-icon");
 stamp.src = generateStamp();
+
+/* Initialize Form Question */
 generateQuestion();
+
+/* Initialize Message Log */
 updateLog();
 
+
+
+//
+// Classes
+//
+
+/*
+ * This class creates a array of Message objects to create the log and includes
+ * two functions: addMsg and sendMsg
+ *
+ * addMsg(): Creates and pushes a new Message object into the array and re-initializes the form
+ * sendMsg(): Creates the animation "send-stamp" element and adds it to the HTML
+ */
 class Messages {
     constructor() {
-        this.listOfMsgs = []
+        this.listOfMsgs = []; // Array of Message objects
     }
 
     addMsg(name, feeling, affirmation, goal, answer, question, id, date) {
-        var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date)
-        this.listOfMsgs.push(newMsg)
+        var newMsg = new Message(name, feeling, affirmation, goal, answer, question, id, date);
+        this.listOfMsgs.push(newMsg);
         this.sendMsg();
 
-        setTimeout(function() {
+        /*
+         * This function delays removing the "send-stemp" animation by 1 second
+         * (1000 milliseconds) before resetting the form
+         */
+        setTimeout(function () {
             let removeStamp = document.getElementById("form-header");
             removeStamp.removeChild(document.getElementById("send-stamp"));
-            form.reset()
-            console.log("form reseted")
-            console.log("stamp removed")
-            generateQuestion()
+            form.reset();
+            generateQuestion();
             var stamp = document.getElementById("stamp-icon");
             stamp.src = generateStamp();
         }, 1000);
 
+        // Updates local storage with new Message object and updates the diary log
         let storeMsg = JSON.parse(localStorage.getItem("storeMsg"))
         if (storeMsg === null || !(Array.isArray(storeMsg))) {
-            console.log("init array")
             storeMsg = new Array(newMsg)
         } else {
-            console.log("add to array")
             storeMsg.push(newMsg);
         }
         localStorage.setItem("storeMsg", JSON.stringify(storeMsg));
@@ -169,46 +200,81 @@ class Messages {
         let send = document.createElement("img");
         send.id = "send-stamp";
         send.src = require("../static/sent.png");
-        console.log (stamp);
-
         let grabStamp = document.getElementById("stamp-icon");
         grabStamp.after(send);
     }
 
 }
 
+
+/*
+ * This class initializes a Message object from the given form data
+ */
 class Message {
     constructor(name, feeling, affirmation, goal, answer, question, id, date) {
-        this.name = name
-        this.feeling = feeling
-        this.affirmation = affirmation
-        this.goal = goal
-        this.answer = answer
-        this.question = question
-        this.id = id
-        this.date = date
+        this.name = name; // Partner Name
+        this.feeling = feeling; // Partner Feeling
+        this.affirmation = affirmation; // Partner Affirmation Message
+        this.goal = goal; // Partner Goal of the Day Message
+        this.answer = answer; // Partner Answer Choice
+        this.question = question; // Generated 'Would You Rather' Question
+        this.id = id; // Randomly Generated Message ID
+        this.date = date; // Message Date
     }
 }
 
-var listMsgs = new Messages()
+var listMsgs = new Messages(); // Global variable for the Messages array
 
+
+
+//
+// Event Functions
+//
+
+/*
+ * This function listens for the user clicking the submit message button and saves
+ * the inputted form data to create a new Message object
+ */
 form.addEventListener("submit", function (event) {
-    console.log("submit detected")
-    event.preventDefault();
-    var msgName = form.elements.partnerName.value
-    var msgFeel = form.elements.partnerFeeling.value
-    var msgAffirm = form.elements.partnerAffirmation.value
-    var msgGoal = form.elements.partnerGoal.value
-    var msgAnswer = form.querySelector('input[name="partnerQuestion"]:checked').value
-    var msgQuestion = document.getElementById("questionPrompt").innerText
-    var msgId = Math.floor(Math.random() * Date.now())
-    var msgDate = document.getElementById("today-date").innerText
+    event.preventDefault(); // Prevents empty form inputs from being submitted
+    var msgName = form.elements.partnerName.value;
+    var msgFeel = form.elements.partnerFeeling.value;
+    var msgAffirm = form.elements.partnerAffirmation.value;
+    var msgGoal = form.elements.partnerGoal.value;
+    var msgAnswer = form.querySelector("input[name='partnerQuestion']:checked").value;
+    var msgQuestion = document.getElementById("questionPrompt").innerText;
+    var msgId = Math.floor(Math.random() * Date.now());
+    var msgDate = document.getElementById("today-date").innerText;
+
+    // Create a new Message object from inputted form data and add to Messages array
     listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate);
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({top: 0, behavior: "smooth" }); // Scrolls to top of the screen to see "send stamp" animation
 })
 
-function generateStamp(){
+
+/*
+ * This function checks the current user's screen size to optimize HTML elements
+ * for mobile screens
+ */
+function checkScreenSize() {
+    if (screen.width <= 780) {
+        var header = document.getElementById("form-header");
+        var leftCol = msgForm.firstElementChild.firstElementChild;
+        leftCol.insertBefore(header, leftCol.firstElementChild);
+    }
+}
+
+
+/*
+ * This function returns a new stamp graphic source path based on the current
+ * saved index from local storage. Once the index is greater than total stamps,
+ * the index is resetted.
+ */
+function generateStamp() {
+    // Gets current stamp index from local storage
     var index = JSON.parse(localStorage.getItem("storeStamp")) || 0;
+
+    // Gets the static images from project folder to create a array of stamps
     const stamp1 = require("../static/stamp1.png");
     const stamp2 = require("../static/stamp2.png");
     const stamp3 = require("../static/stamp3.png");
@@ -220,30 +286,50 @@ function generateStamp(){
     const stamp9 = require("../static/stamp9.png");
     const stamps = [stamp1, stamp2, stamp3, stamp4, stamp5, stamp6, stamp7, stamp8, stamp9];
 
-    if (index == stamps.length){
+    // Checks if the current stamp index is equal to total stamps
+    if (index == stamps.length) {
         index = 0;
     }
-    localStorage.setItem("storeStamp", JSON.stringify(index+1));
+
+    // Saves the new stamp index to local storage
+    localStorage.setItem("storeStamp", JSON.stringify(index + 1));
+
+    // Returns the static image file path
     return stamps[index];
 }
 
+
+/*
+ * This function generates a new Would You Rather question based on the current
+ * saved index from local storage. Once the index is greater than list total,
+ * the index is resetted.
+ */
 function generateQuestion() {
+    // Gets current question index from local storage
     var index = JSON.parse(localStorage.getItem("storeQues")) || 0;
+
+    // Accesses the large question list and splits the information into an array
     var lines = questionsList.split("\n");
     let prompt = [];
+
+    // Checks if the current question index is equal to total lines
     if (index >= lines.length) {
         index = 0;
     }
     var line = lines[index].trim();
     prompt = line.split(",");
+
+    // Saves the new question index to local storage
     localStorage.setItem("storeQues", JSON.stringify(index + 1));
 
+    // Getters for Would You Rather section of form
     var changePrompt = document.getElementById("questionPrompt");
     var changeChoiceAVal = document.getElementById("choiceA");
     var changeChoiceATxt = document.getElementById("choiceATxt");
     var changeChoiceBVal = document.getElementById("choiceB");
     var changeChoiceBTxt = document.getElementById("choiceBTxt");
 
+    // Setters for Would You Rather section of form
     changePrompt.innerText = prompt[1];
     changeChoiceAVal.value = prompt[2];
     changeChoiceATxt.innerHTML = prompt[2];
@@ -251,8 +337,17 @@ function generateQuestion() {
     changeChoiceBTxt.innerHTML = prompt[3];
 }
 
-function generateCardImg(){
+
+/*
+ * This function returns a new card image based on the current saved index
+ * from local storage. Once the index is greater than total cards,
+ * the index is resetted.
+ */
+function generateCardImg() {
+    // Gets current card image index from local storage
     var index = JSON.parse(localStorage.getItem("storeCardImg")) || 0;
+
+    // Gets the static images from project folder to create a array of cards
     const card1 = require("../static/card1.png");
     const card2 = require("../static/card2.png");
     const card3 = require("../static/card3.png");
@@ -260,122 +355,142 @@ function generateCardImg(){
     const card5 = require("../static/card5.png");
     const card6 = require("../static/card6.png");
     const cards = [card1, card2, card3, card4, card5, card6];
-    if (index == cards.length){
+
+    // Checks if the current card image index is equal to total cards
+    if (index == cards.length) {
         index = 0;
     }
-    localStorage.setItem("storeCardImg", JSON.stringify(index+1));
+
+    // Saves the new card image index to local storage
+    localStorage.setItem("storeCardImg", JSON.stringify(index + 1));
+
+    // Returns the static image file path
     return cards[index];
 }
 
+
+/*
+ * This function tracks the user's pointer click to see whether they clicked on
+ * the thumbtack to delete a Message, or on a card to view the full Message on
+ * an overlay
+ */
 const logInteraction = (e) => {
-    if (e.target.matches('img')){
-        console.log("btn detected")
+    // Checks if the pointer click matches an image element (thumbtack)
+    if (e.target.matches("img")) {
+        // Finds the specific card container (parent) of the thumbtack (child) the user clicked to remove
         const parent = e.target.parentElement.parentElement.parentElement.parentElement;
+        
+        // If valid, remove the parent card container from HTML and local storage
         if (parent !== null) {
-            console.log(parent.className, parent.id);
+            // Remove from HTML
             parent.remove();
 
-            let test = JSON.parse(localStorage.getItem('storeMsg'))
-            if (test !== null && Array.isArray(test)) {
-                test.forEach((msg) => {
+            // Remove from local storage based on saved Message ID
+            let msgRemove = JSON.parse(localStorage.getItem("storeMsg"));
+            if (msgRemove !== null && Array.isArray(msgRemove)) {
+                msgRemove.forEach((msg) => {
                     if (msg.id == parent.id) {
-                        let removeIdx = test.indexOf(msg)
-                        console.log(removeIdx)
-                        test.splice(removeIdx, 1)
+                        let removeIdx = msgRemove.indexOf(msg);
+                        msgRemove.splice(removeIdx, 1);
                     }
                 })
             }
-            localStorage.setItem("storeMsg", JSON.stringify(test))
+
+            // Update local storage and visual display of available Messages
+            localStorage.setItem("storeMsg", JSON.stringify(msgRemove));
             updateLog();
         }
+
+    // Checks if the pointer click matches any of the card elements
     } else {
-        console.log("card clicked");
-        let elem = e.target
+        let elem = e.target;
         let getMsg;
-        switch (elem.className){
-            case "card-front":
-                console.log("front clicked");
+
+        // Switch case to grab the specific Message data based on user's pointer click location
+        switch (elem.className) {
+            case "card-front": // 'card-front' div element clicked
                 getMsg = elem.parentElement.parentElement.id;
                 break;
-            case "name":
-                console.log("name clicked");
+            case "name": // 'name' p element clicked
                 getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
                 break;
-            case "date":
-                console.log("date clicked");
+            case "date": // 'date' p element clicked
                 getMsg = elem.parentElement.parentElement.parentElement.parentElement.id;
-                console.log(getMsg);
                 break;
-            case "card-preview":
-                console.log("preview clicked");
+            case "card-preview": // 'card-preview' div element clicked
                 getMsg = elem.parentElement.parentElement.parentElement.id;
                 break;
-            default:
-                console.log("not included");
+            default: // No card element was clicked
                 break;
         }
-        console.log(getMsg)
+
+        // Accesses local storage to find the specific Message data for preview
         let msgInfo = JSON.parse(localStorage.getItem("storeMsg"));
-        
         if (msgInfo !== null && Array.isArray(msgInfo)) {
+
+            // Loops local storage Messages to find the matching Message ID
             msgInfo.forEach((msg) => {
                 if (msg.id == getMsg) {
+
+                    // Creates an overlay of the Message preview
                     let popup = document.createElement("div");
                     popup.className = "overlay";
                     popup.id = "card-popup";
                     let container = document.createElement("div");
                     container.className = "form-container";
 
-                    if (screen.width <= 780){
+                    // Based on user's screen size, the preview format will be different
+                    if (screen.width <= 780) {
                         container.innerHTML =
-                        `<div class="form-col-left">
-                            <div class="form-row" id="popup-header">
-                                <p class="popup-head" style="float: left">${msg.date}</p>
-                                <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
-                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
+                            `<div class="form-col-left">
+                                <div class="form-row" id="popup-header">
+                                    <p class="popup-head" style="float: left">${msg.date}</p>
+                                    <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
+                                    <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
+                                </div>
+                                <div class="form-row" id="popup-msg">
+                                    <p class="popup-head">From ${msg.name},</p>
+                                    <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
+                                    <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
+                                    <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
+                                </div>
                             </div>
-                            <div class="form-row" id="popup-msg">
-                                <p class="popup-head">From ${msg.name},</p>
-                                <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
-                                <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
-                                <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
-                            </div>
-                        </div>
-                        <div class="form-col-right">
-                            <div class="form-row">
-                                <h5 class="popup-head">Would You Rather?</h5>
-                                <p class="popup-text">${msg.question}</p>
-                                <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
-                            </div>
-                            <button class="return">Return to Home</button>
-                        </div>`;
+                            <div class="form-col-right">
+                                <div class="form-row">
+                                    <h5 class="popup-head">Would You Rather?</h5>
+                                    <p class="popup-text">${msg.question}</p>
+                                    <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
+                                </div>
+                                <button class="return">Return to Home</button>
+                            </div>`;
                     }
                     else {
                         container.innerHTML =
-                        `<div class="form-col-left">
-                            <div class="form-row" id="popup-msg">
-                                <p class="popup-head">From ${msg.name},</p>
-                                <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
-                                <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
-                                <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
+                            `<div class="form-col-left">
+                                <div class="form-row" id="popup-msg">
+                                    <p class="popup-head">From ${msg.name},</p>
+                                    <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
+                                    <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
+                                    <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-col-right">
-                            <div class="form-row" id="popup-header">
-                                <p class="popup-head" style="float: left">${msg.date}</p>
-                                <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
-                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
-                            </div>
-                            <br><br><br><br>
-                            <div class="form-row">
-                                <h5 class="popup-head">Would You Rather?</h5>
-                                <p class="popup-text">${msg.question}</p>
-                                <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
-                            </div>
-                            <button class="return">Return to Home</button>
-                        </div>`;
+                            <div class="form-col-right">
+                                <div class="form-row" id="popup-header">
+                                    <p class="popup-head" style="float: left">${msg.date}</p>
+                                    <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
+                                    <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
+                                </div>
+                                <br><br><br><br>
+                                <div class="form-row">
+                                    <h5 class="popup-head">Would You Rather?</h5>
+                                    <p class="popup-text">${msg.question}</p>
+                                    <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
+                                </div>
+                                <button class="return">Return to Home</button>
+                            </div>`;
                     }
-                    
+
+                    // Adds the overlay to the HTML
                     popup.appendChild(container);
                     let add = document.getElementById("msg-container");
                     add.after(popup);
@@ -385,10 +500,15 @@ const logInteraction = (e) => {
     }
 };
 
+
+/*
+ * This function tracks the user's pointer click on the overlay Message preview
+ * screen to track if the user wants to close the preview popup
+ */
 const closePopup = (e) => {
     let secLastChild = document.body.lastElementChild.previousElementSibling;
-    if (secLastChild.className == "overlay"){
-        if (e.target.matches("button")){
+    if (secLastChild.className == "overlay") { // Checks if overlay exists
+        if (e.target.matches("button")) {
             let popup = document.getElementById("card-popup");
             document.body.removeChild(popup)
         }
@@ -397,37 +517,41 @@ const closePopup = (e) => {
     }
 };
 
-msgList.addEventListener('click', logInteraction);
-document.body.addEventListener('click', closePopup);
 
+/*
+ * This function updates the message container of all saved Messages from local
+ * storage and creates a card display element for every Message
+ */
 function updateLog() {
-    msgList.innerHTML = ""
+    // Initializes an empty message container
+    msgList.innerHTML = "";
 
+    // Access all saved Message objects from local storage
     let diaryLog = JSON.parse(localStorage.getItem("storeMsg"))
-
     if (diaryLog !== null && Array.isArray(diaryLog)) {
         diaryLog.forEach((msg) => {
-            var msgData = document.createElement("div")
-            msgData.id = msg.id
-            msgData.className = "card-container"
+
+            // Loops local storage of each Message to create card display element
+            var msgData = document.createElement("div");
+            msgData.id = msg.id;
+            msgData.className = "card-container";
             msgData.innerHTML =
-                `
-            <div class= "card-inner">
-                <div class="card-front" style="background-image: url(${generateCardImg()})">
-                    <button class="delete-btn" title="Remove Message?">
-                        <img src="${require("../static/thumbtack.png")}" id="tack"/>
-                    </button>
-                    <div class="card-preview">
-                        <p class="name">${msg.name}</p>
-                        <p class="date">${msg.date}</p>
+                `<div class= "card-inner">
+                    <div class="card-front" style="background-image: url(${generateCardImg()})">
+                        <button class="delete-btn" title="Remove Message?">
+                            <img src="${require("../static/thumbtack.png")}" id="tack"/>
+                        </button>
+                        <div class="card-preview">
+                            <p class="name">${msg.name}</p>
+                            <p class="date">${msg.date}</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            `
-            msgList.append(msgData)
+                </div>`;
+            msgList.append(msgData); // Appends each new card to the message container
         });
     }
 }
 
-console.log("executed")
+msgList.addEventListener("click", logInteraction); // Tracks user clicks in message container
+document.body.addEventListener("click", closePopup); // Trakcs user clicks on message popup
 

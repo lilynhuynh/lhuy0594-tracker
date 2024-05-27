@@ -1,18 +1,16 @@
 // Checked
-// Might just merge this into layout
 
 // DM San Serif
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 // DM Sans
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000');
 
+// Variables
 $cocoabean:#511A18;
 $mistyrose:#FFE6E5;
 $rosybrown: #B8817F;
-
 $dmserif: "DM Serif Display", serif;
 $dmsans: "DM Sans", sans-serif;
-
 $screen-break: 780px;
 $max-width: 1000px;
 
@@ -29,7 +27,6 @@ $max-width: 1000px;
     width:40px;
     vertical-align: center;
     text-align: center;
-
     @media (max-width: $max-width) {
         width: 20px;
     }

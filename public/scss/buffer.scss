@@ -1,19 +1,19 @@
+//Checked
+
 #hideAll {
     position: fixed;
     left: 0px;
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: var(--cocoabean);
+    background-color: $cocoabean;
     z-index: 99;
     display: none;
-
     h1, p {
         text-align: center;
-        color: var(--mistyrose);
-        font-family: "DM Sans";
+        color: $mistyrose;
+        font-family: $dmsans;
     }
-
     .buffer-elem {
         vertical-align: middle;
     }
@@ -24,12 +24,10 @@
         opacity: 0;
         display: none;
     }
-
     50% {
         opacity: 0.5;
         display: block;
     }
-
     100% {
         opacity: 1;
         display: block;
@@ -40,9 +38,9 @@
     margin: 20px;
     vertical-align: middle;
     margin: 0 auto;
-    border: 20px solid var(--mistyrose);
+    border: 20px solid $mistyrose;
     border-radius: 50%;
-    border-top: 20px solid var(--rosybrown);
+    border-top: 20px solid $rosybrown;
     width: 100px;
     height: 100px;
     animation: spinner 4s linear infinite;
@@ -52,7 +50,6 @@
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }
