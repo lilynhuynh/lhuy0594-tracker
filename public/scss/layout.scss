@@ -18,9 +18,9 @@ $max-width: 1000px;
 
 #msg-container {
     max-width: $max-width;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 0.5fr);
     @media (max-width: $screen-break) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: auto;
         max-width: $screen-break;
     }
 }
@@ -29,6 +29,10 @@ $max-width: 1000px;
     width:40px;
     vertical-align: center;
     text-align: center;
+
+    @media (max-width: $max-width) {
+        width: 20px;
+    }
 }
 
 header>h1 {

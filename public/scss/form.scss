@@ -41,13 +41,26 @@
         grid-template-areas:
         "form-col-left"
         "form-col-right";
-        height: $max-width;
+        height: auto;
         .form-col-right {
             border-style: solid hidden hidden hidden;
-            padding-top: 20px;
+            padding-top: 0px;
+            padding-bottom: 10px;
         }
         .form-col-left {
             margin-right: 20px;
+        }
+        br {
+            display: none;
+        }
+        #choices br {
+            display: inline-block;
+        }
+        textarea {
+            height: auto;
+        }
+        #form-header {
+            margin-bottom: 50px;
         }
     }
 }
@@ -69,6 +82,12 @@ select {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     background-color: white;
+}
+
+input[type='radio'] {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
 }
 
 textarea {
@@ -101,12 +120,16 @@ button:active {
 
 #stamp-icon{
     width: 80px;
+
+    @media (max-width: $screen-break) {
+        width: 60px;
+    }
 }
 
 #form-header #send-stamp {
     width: 170px;
     z-index: 2px;
-    top: 0;
+    top: 10px;
     position: absolute;
     -webkit-animation-name: sent-stamp;
     animation-name: sent-stamp;
@@ -117,7 +140,11 @@ button:active {
     opacity: 0;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-    float: right;
+
+    @media (max-width: $screen-break) {
+        width: 120px;
+        right: 50px;
+    }
 }
 
 @keyframes sent-stamp {

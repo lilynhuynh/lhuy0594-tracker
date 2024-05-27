@@ -19,6 +19,10 @@ h1 {
     font-family: "DM Serif Display";
     font-size: 50px;
     color: var(--cocoabean);
+
+    @media (max-width: $max-width) {
+        font-size: 30px;
+    }
 }
 
 p,
@@ -26,6 +30,10 @@ p,
     font-family: "DM Serif Display";
     font-size: 24px;
     color: var(--cocoabean);
+
+    @media (max-width: $max-width) {
+        font-size: 16px;
+    }
 }
 
 input[type='text']::placeholder,
@@ -41,6 +49,10 @@ button,
     font-family: "DM Sans";
     color: var(--rosybrown);
     font-size: 18px;
+
+    @media (max-width: $screen-break) {
+        font-size: 12px;
+    }
 }
 
 #nameLabel {
@@ -65,5 +77,32 @@ button,
     }
     p {
         font-size: 18px;
+    }
+}
+
+#card-popup {
+    color: var(--cocoabean);
+
+    .popup-head {
+        font-size: 24px;
+        font-family: "DM Serif Display";
+
+        @media (max-width: $screen-break) {
+            font-size: 18px;
+        }
+    }
+
+    .popup-text {
+        font-size: 18px;
+        font-family: "DM Sans";
+
+        @media (max-width: $screen-break) {
+            font-size: 12px;
+        }
+    }
+
+    #popup-msg {
+        color: var(--rosybrown);
+        word-wrap: break-word;
     }
 }

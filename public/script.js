@@ -6,13 +6,17 @@ var todayDateStr = (todayDate.getMonth()+1)+"/"+(todayDate.getDate())+"/"+(today
 document.getElementById("today-date").innerHTML = todayDateStr;
 
 // Move form-header if mobile screen
-if (screen.width < 780) {
-    var header = document.getElementById("form-header");
-    var leftCol = msgForm.firstChild.firstChild;
-    console.log(leftCol)
+console.log(screen.width)
+
+function checkScreenSize(){
+    if (screen.width <= 780) {
+        var header = document.getElementById("form-header");
+        var leftCol = msgForm.firstElementChild.firstElementChild;
+        leftCol.insertBefore(header, leftCol.firstElementChild);
+    }
 }
-
-
+checkScreenSize();
+window.addEventListener("resize", checkScreenSize());
 
 // Would You Rather Questions provided by Paired Magazine
 const questionsList =
@@ -199,7 +203,8 @@ form.addEventListener("submit", function (event) {
     var msgQuestion = document.getElementById("questionPrompt").innerText
     var msgId = Math.floor(Math.random() * Date.now())
     var msgDate = document.getElementById("today-date").innerText
-    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate)
+    listMsgs.addMsg(msgName, msgFeel, msgAffirm, msgGoal, msgAnswer, msgQuestion, msgId, msgDate);
+    window.scrollTo({top: 0, behavior: "smooth"});
 })
 
 function generateStamp(){
@@ -321,10 +326,10 @@ const logInteraction = (e) => {
                     let container = document.createElement("div");
                     container.className = "form-container";
 
-                    if (screen.width < 780){
+                    if (screen.width <= 780){
                         container.innerHTML =
                         `<div class="form-col-left">
-                            <div class="form-row" id="popout-header">
+                            <div class="form-row" id="popup-header">
                                 <p class="popup-head" style="float: left">${msg.date}</p>
                                 <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
                                 <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
@@ -356,7 +361,7 @@ const logInteraction = (e) => {
                             </div>
                         </div>
                         <div class="form-col-right">
-                            <div class="form-row" id="popout-header">
+                            <div class="form-row" id="popup-header">
                                 <p class="popup-head" style="float: left">${msg.date}</p>
                                 <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
                                 <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
