@@ -5,6 +5,15 @@ var todayDate = new Date();
 var todayDateStr = (todayDate.getMonth()+1)+"/"+(todayDate.getDate())+"/"+(todayDate.getFullYear());
 document.getElementById("today-date").innerHTML = todayDateStr;
 
+// Move form-header if mobile screen
+if (screen.width < 780) {
+    var header = document.getElementById("form-header");
+    var leftCol = msgForm.firstChild.firstChild;
+    console.log(leftCol)
+}
+
+
+
 // Would You Rather Questions provided by Paired Magazine
 const questionsList =
     `0,Would you rather have to go on 100 first dates or have to spend the rest of your life with your next date? ,100 First Dates,Forever With Next Date
@@ -311,7 +320,33 @@ const logInteraction = (e) => {
                     popup.id = "card-popup";
                     let container = document.createElement("div");
                     container.className = "form-container";
-                    container.innerHTML =
+
+                    if (screen.width < 780){
+                        container.innerHTML =
+                        `<div class="form-col-left">
+                            <div class="form-row" id="popout-header">
+                                <p class="popup-head" style="float: left">${msg.date}</p>
+                                <img id="stamp-icon" style="float: right;" src="${generateStamp()}"/>
+                                <img id="send-stamp" style="float: right;" src="${require("../static/sent.png")}">
+                            </div>
+                            <div class="form-row" id="popup-msg">
+                                <p class="popup-head">From ${msg.name},</p>
+                                <p class="popup-text">Today, I feel <strong>${msg.feeling}</strong>.</p>
+                                <p class="popup-text"><strong>My daily affirmation is: </strong>${msg.affirmation}</p>
+                                <p class="popup-text"><strong>My goal today is: </strong>${msg.goal}</p>
+                            </div>
+                        </div>
+                        <div class="form-col-right">
+                            <div class="form-row">
+                                <h5 class="popup-head">Would You Rather?</h5>
+                                <p class="popup-text">${msg.question}</p>
+                                <p class="popup-text"><strong>Answer: </strong>${msg.answer}</p>
+                            </div>
+                            <button class="return">Return to Home</button>
+                        </div>`;
+                    }
+                    else {
+                        container.innerHTML =
                         `<div class="form-col-left">
                             <div class="form-row" id="popup-msg">
                                 <p class="popup-head">From ${msg.name},</p>
@@ -334,6 +369,7 @@ const logInteraction = (e) => {
                             </div>
                             <button class="return">Return to Home</button>
                         </div>`;
+                    }
                     
                     popup.appendChild(container);
                     let add = document.getElementById("msg-container");

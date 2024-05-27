@@ -1,4 +1,29 @@
 // Checked
+// Might just merge this into layout
+
+// DM San Serif
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+// DM Sans
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000');
+
+$cocoabean:#511A18;
+$mistyrose:#FFE6E5;
+$rosybrown: #B8817F;
+
+$dmserif: "DM Serif Display", serif;
+$dmsans: "DM Sans", sans-serif;
+
+$screen-break: 780px;
+$max-width: 1000px;
+
+#msg-container {
+    max-width: $max-width;
+    grid-template-columns: repeat(3, 1fr);
+    @media (max-width: $screen-break) {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: $screen-break;
+    }
+}
 
 .title_icon {
     width:40px;
@@ -15,8 +40,7 @@ body {
 }
 
 #msg-container {
-    max-width: 90%;
-    gap: 1rem;
+    gap: 0.5rem;
     display: grid;
     margin: 0 auto;
 }
