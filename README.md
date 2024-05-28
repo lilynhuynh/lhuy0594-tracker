@@ -56,7 +56,7 @@ Ideally, the application would allow for both parties to share a single storage 
 | Rinck Content Studio | [Pink and white hearts illustration](https://unsplash.com/photos/pink-and-white-hearts-illustration-O8PjuNKatJ0) |
 | Pablo Merchan Montes | [Green cup on saucer](https://unsplash.com/photos/green-cup-on-saucer-_Tw4vCs9C-8) |
 
-<br><br>
+<br>
 
 **Card Displays:** Images were sources from _Freepik_ and _Pixabay_
 
@@ -67,14 +67,13 @@ Ideally, the application would allow for both parties to share a single storage 
 | Hardae | [Pastels Art Wallpaper](https://pixabay.com/illustrations/pastels-art-wallpaper-aesthetic-7118442/)<br><br>[Background Pattern Pastel Colors](https://pixabay.com/illustrations/background-pattern-pastel-colors-7071134/) |
 | Bianca Van Dijk | [Forms Art Pattern](https://pixabay.com/illustrations/forms-art-pattern-design-colors-7742947/) |
 
-<br><br>
+<br>
 
 **JavaScript, HTML, SCSS:** Inspiration and coding resources were sourced from _Stack Overflow_ and _W3Schools_. More specific examples will be linked below:
 
 - [**Buffer Screen**](https://blog.hubspot.com/website/css-loading-animation): I referenced this source for the buffer load animation.
 
-
-
+<br>
 
 ### AI Usage
 
