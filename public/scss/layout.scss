@@ -37,7 +37,7 @@ header>h1 {
 }
 
 body {
-    background-color: var(--mistyrose);
+    background-color: $mistyrose;
 }
 
 #msg-container {
@@ -64,7 +64,7 @@ hr:after {
     content: '';
     display: block;
     position: absolute;
-    background: var(--cocoabean);
+    background: $cocoabean;
     height: 3px;
     top: 8px;
 }

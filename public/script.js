@@ -130,10 +130,6 @@ const questionsList = // Would You Rather Questions provided by Paired Magazine
 // On Window Initiation
 //
 
-/* Initialize Screen Size */
-checkScreenSize();
-window.addEventListener("resize", checkScreenSize());
-
 /* Initialize Form Date */
 var todayDate = new Date();
 var todayDateStr = (todayDate.getMonth() + 1) + "/" + (todayDate.getDate()) + "/" + (todayDate.getFullYear());
@@ -254,16 +250,21 @@ form.addEventListener("submit", function (event) {
 
 /*
  * This function checks the current user's screen size to optimize HTML elements
- * for mobile screens
+ * on screen, specifically the form header
  */
 function checkScreenSize() {
+    var header = document.getElementById("form-header");
     if (screen.width <= 780) {
-        var header = document.getElementById("form-header");
         var leftCol = msgForm.firstElementChild.firstElementChild;
         leftCol.insertBefore(header, leftCol.firstElementChild);
+    } else {
+        var rightCol = msgForm.firstElementChild.lastElementChild;
+        if (rightCol.firstElementChild.id != "form-header"){
+            rightCol.insertBefore(header, rightCol.firstElementChild);
+        }
     }
 }
-
+checkScreenSize();
 
 /*
  * This function returns a new stamp graphic source path based on the current
@@ -529,7 +530,7 @@ function updateLog() {
     // Access all saved Message objects from local storage
     let diaryLog = JSON.parse(localStorage.getItem("storeMsg"))
     if (diaryLog !== null && Array.isArray(diaryLog)) {
-        diaryLog.forEach((msg) => {
+        diaryLog.reverse().forEach((msg) => {
 
             // Loops local storage of each Message to create card display element
             var msgData = document.createElement("div");
@@ -553,5 +554,5 @@ function updateLog() {
 }
 
 msgList.addEventListener("click", logInteraction); // Tracks user clicks in message container
-document.body.addEventListener("click", closePopup); // Trakcs user clicks on message popup
-
+document.body.addEventListener("click", closePopup); // Tracks user clicks on message popup
+window.addEventListener("resize", checkScreenSize); // Tracks user screen size

@@ -1,7 +1,7 @@
 {
   "name": "web_design",
   "version": "1.0.0",
-  "description": "Design a prototype web application for a chosen scope",
+  "description": "A SPA that tracks user message logs",
   "scripts": {
     "start": "rm -rf .parcel-cache && node server.js",
     "prestart": "rm -rf .parcel-cache && parcel build ./public/index.html ./static/**",
