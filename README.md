@@ -55,6 +55,7 @@ Ideally, the application would allow for both parties to share a single storage 
 | Micheile Henderson | [Pink heart shaped paper on white and pink floral textile](https://unsplash.com/photos/pink-heart-shaped-paper-on-white-and-pink-floral-textile-Tle_uYHXRwI) |
 | Rinck Content Studio | [Pink and white hearts illustration](https://unsplash.com/photos/pink-and-white-hearts-illustration-O8PjuNKatJ0) |
 | Pablo Merchan Montes | [Green cup on saucer](https://unsplash.com/photos/green-cup-on-saucer-_Tw4vCs9C-8) |
+
 <br><br>
 
 **Card Displays:** Images were sources from _Freepik_ and _Pixabay_
@@ -65,11 +66,12 @@ Ideally, the application would allow for both parties to share a single storage 
 | Freepik | [Abstract hand drawn background](https://www.freepik.com/free-vector/abstract-hand-drawn-background_18039141.htm#fromView=image_search_similar&page=1&position=0&uuid=97ea71cc-472d-4b94-945a-142b0f9fbf93)<br><br>[Flat abstract doodle background](https://www.freepik.com/free-vector/flat-abstract-doodle-background_24236173.htm#fromView=image_search_similar&page=1&position=25&uuid=520c5744-746b-4c75-88e5-7a4dead6c286) |
 | Hardae | [Pastels Art Wallpaper](https://pixabay.com/illustrations/pastels-art-wallpaper-aesthetic-7118442/)<br><br>[Background Pattern Pastel Colors](https://pixabay.com/illustrations/background-pattern-pastel-colors-7071134/) |
 | Bianca Van Dijk | [Forms Art Pattern](https://pixabay.com/illustrations/forms-art-pattern-design-colors-7742947/) |
+
 <br><br>
 
 **JavaScript, HTML, SCSS:** Inspiration and coding resources were sourced from _Stack Overflow_ and _W3Schools_. More specific examples will be linked below:
 
-- [**Buffer Screen**](https://blog.hubspot.com/website/css-loading-animation): I used this source for the buffer load animation.
+- [**Buffer Screen**](https://blog.hubspot.com/website/css-loading-animation): I referenced this source for the buffer load animation.
 
 
 
