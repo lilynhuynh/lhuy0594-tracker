@@ -1,4 +1,4 @@
-# Our Love Diary
+# Our Love Diary :love_letter:
 
 ## Overview
 
@@ -79,3 +79,7 @@ Ideally, the application would allow for both parties to share a single storage 
 ### AI Usage
 
 This project does not use any AI generated content and most of the inspiration/coding resources were sourced online.
+
+## Thanks! :bowtie:
+
+This was a fun project to work on and I learned a lot of new features like SASS and `localStorage` to better my skills in front-end and back-end development. I hope you enjoy playing around with the site and hopefully I can add more features for a more fun and interactive application! :shipit:
