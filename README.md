@@ -33,8 +33,7 @@ Once the server is running, you are able to log your messages and access them in
 Ideally, the application would allow for both parties to share a single storage together, but since it uses `localStorage`, the application only allows for tracking of message logs to a specific browser or singular device. Thus, if the user wanted to access their messages on a different browser or device, they would not be able to.
 
 ## Development
-- [Web App Design Brief](https://drive.google.com/file/d/1KRDJaOgG9gotvGhO32_7Xl4rYT6NVlZH/view?usp=sharing)
-- [Figma Board](https://www.figma.com/design/8RlP6Fz3EuWtWGDum0o9zI/A3-DECO2014?node-id=0-1&t=MFnNJjLuBltcH5Xx-1)
+Within my [Web App Design Brief](https://drive.google.com/file/d/1KRDJaOgG9gotvGhO32_7Xl4rYT6NVlZH/view?usp=sharing), I broke down in detail the purpose, target audience, and features as well as the desktop and mobile wireframes. From the brief, I began developing a fully fledged SPA, using [Figma](https://www.figma.com/design/8RlP6Fz3EuWtWGDum0o9zI/A3-DECO2014?node-id=0-1&t=MFnNJjLuBltcH5Xx-1) to visualize my wireframe concept in color, etc. I received feedback about my mobile wireframes from my design brief that they needed to be more responsive in terms of columns. Thus, in the updated design, I designed the mobile wireframes to become one column for the form, rather than the regular two as well as a one column grid than two. Other than that, the rest of the original design stayed the same.
 
 ## Acknowledgements
 
